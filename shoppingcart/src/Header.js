@@ -19,7 +19,7 @@ function Header() {
                 <div className="container-fluid">
                     <div className="row align-items-center">
                         <div className="col-md-2">
-                            <img src="./cart.png" style={{ width: "100px" }} alt="..." />
+                            <img src="../cartlogo.png" style={{ width: "100px" }} alt="..." />
                         </div>
                         {loginname ?
                             <>

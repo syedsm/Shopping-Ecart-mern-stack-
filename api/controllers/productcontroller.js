@@ -147,16 +147,16 @@ exports.cartproducts = async (req, res) => {
 
 exports.singleproductfetch = async (req, res) => {
     // console.log(req.params.id);
-    const { productId } = req.params.id
+    const productId = req.params.id
     try {
-        const record = await product.findOne({ productId })
+        const record = await product.findOne({ _id: productId })
         if (!record) {
             return res.status(404).json({ message: 'Product not found' });
         }
         // console.log(record);
         res.json(record);
 
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server Error' });
     }

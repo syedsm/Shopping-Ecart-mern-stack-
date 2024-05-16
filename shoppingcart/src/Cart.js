@@ -72,20 +72,43 @@ function Cart() {
             navigate('/')
             return;
         } else {
-            localStorage.setItem('cart','')
+            localStorage.setItem('cart', '')
             setCart(localStorage.getItem('cart'))
             navigate('/userproduct')
         }
     }
 
     function handledelete(e, id) {
-        let current_qnty = handlequan(id)
-        console.log("current_qnty:", current_qnty)
-        let _cart = { ...cart }
-        delete _cart.item[id]
-        _cart.totalItems -= current_qnty
-        setCart(_cart)
+        let current_qnty = handlequan(id);
+        console.log("current_qnty:", current_qnty);
+
+        // Filter out the item with the specified ID from the cart
+        const updatedItems = Object.fromEntries(
+            Object.entries(cart.item).filter(([itemId]) => itemId !== id)
+        );
+
+        // Calculate the updated total number of items
+        const updatedTotalItems = cart.totalItems - current_qnty;
+
+        // Create the updated cart object
+        const updatedCart = {
+            ...cart,
+            item: updatedItems,
+            totalItems: updatedTotalItems
+        };
+
+        // Update the cart state
+        setCart(updatedCart);
     }
+
+    // function handledelete(e, id) {
+    //     let current_qnty = handlequan(id)
+    //     console.log("current_qnty:", current_qnty)
+    //     let _cart = { ...cart }
+    //     delete _cart.item[id]
+    //     _cart.totalItems -= current_qnty
+    //     setCart(_cart)
+    // }
 
     // function handledelete(e,id){
     //     let current_qnty=handlequan(id)
@@ -154,7 +177,7 @@ function Cart() {
                     </tbody>
                 </table>
                 :
-                <img src="7612-removebg-preview.png" style={{ width: "45%" }} className="img-fluid rounded mx-auto d-block " alt="..." />
+                <img src="empty-cart.jpg" style={{ width: "45%" }} className="img-fluid rounded mx-auto d-block " alt="..." />
             }
         </>
     );

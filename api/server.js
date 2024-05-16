@@ -4,8 +4,8 @@ const app = express()
 app.use(express.json())
 const apirouter = require('./router/api')
 const mongoose = require('mongoose')
-
 mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
+
 
 app.use('/api', apirouter)
 app.use(express.static('public'))

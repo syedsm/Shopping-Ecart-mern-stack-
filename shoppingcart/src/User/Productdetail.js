@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios'; // You might need to install axios if not already done: npm install axios
+import axios from 'axios';
+import { Contextapi } from "../App";
+
 
 function ProductDetail() {
   const { id } = useParams();
@@ -8,10 +10,8 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch product details from an API based on the ID
     axios.get(`/api/singleproductfetch/${id}`)
       .then(response => {
-        console.log(response);
         setProduct(response.data);
         setLoading(false);
       })
@@ -20,6 +20,27 @@ function ProductDetail() {
         setLoading(false);
       });
   }, [id]);
+
+  const { cart, setCart } = useContext(Contextapi);
+  let _cart = { ...cart };
+
+  function handlecart(product) {
+    if (!_cart.item) {
+      _cart.item = {};
+    }
+    if (!_cart.item[product._id]) {
+      _cart.item[product._id] = 1;
+    } else {
+      _cart.item[product._id] += 1;
+    }
+    if (!_cart.totalItems) {
+      _cart.totalItems = 1;
+    } else {
+      _cart.totalItems += 1;
+    }
+    setCart(_cart);
+  }
+
 
   return (
     <div className="container mt-4">
@@ -45,8 +66,8 @@ function ProductDetail() {
                 <p className="card-text mb-4">{product.desc}</p>
                 <h3 className="card-text mb-3">Price: ${product.price}</h3>
                 {/* Add more details here */}
-                <button className="btn btn-outline-primary  me-3  ">Add to Cart</button>
-                <button className="btn btn-outline-success ">Buy Now</button>
+                <button className="btn btn-outline-primary  me-3" onClick={() => handlecart(product)}>Add to Cart</button>
+                <button className="btn btn-outline-success">Buy Now</button>
               </div>
             </div>
           ) : (
