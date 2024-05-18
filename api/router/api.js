@@ -21,6 +21,8 @@ let upload = multer({
 //Auth route
 router.post('/reg', regco.reg)
 router.post('/logincheck', regco.logincheck)
+router.post('/forgotpassword',regco.forgotpassword)
+router.post('/resetpassword',regco.resetpassword)
 
 //Admin Route
 router.post('/productadd', upload.single('img'), productco.productadd)

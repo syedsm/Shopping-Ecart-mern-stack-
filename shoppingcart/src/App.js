@@ -13,6 +13,9 @@ import Cart from './Cart';
 import './index.css';
 import { createContext } from "react";
 import Productdetail from './User/Productdetail';
+import Forgotpage from './Auth/Forgotpage';
+
+import ResetSentPage from './Auth/Resetpage';
 
 // import Productdelete from './productdelete';
 
@@ -52,12 +55,13 @@ function App() {
                 <Route path='/userproduct' element={<Usersproduct />}></Route>
                 <Route path='/cart' element={<Cart />}></Route>
                 <Route path='/productdetail/:id' element={<Productdetail />}></Route>
-
               </>
             ) : (
               <>
                 <Route path='/productdetail/:id' element={<Productdetail />}></Route>
                 <Route path='/' element={<Login />}></Route>
+                <Route path='/resetsentpage/:email' element={<ResetSentPage />}></Route>
+                <Route path='/forgotpasswordpage' element={<Forgotpage />}></Route>
                 <Route path='/reg' element={<Reg />}></Route>
                 <Route path='/cart' element={<Cart />}></Route>
                 <Route path='/userproduct' element={<Usersproduct />}></Route>

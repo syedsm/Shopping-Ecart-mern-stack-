@@ -39,13 +39,14 @@ function Login() {
                                 {message && <div className="alert alert-danger" role="alert">{message}</div>}
                                 <form onSubmit={handlelogin}>
                                     <div className="form-group">
-                                        <label >Username</label>
-                                        <input className="form-control" value={Username} onChange={(e) => setUsername(e.target.value)} />
+                                        
+                                        <input className="form-control" value={Username} onChange={(e) => setUsername(e.target.value)} placeholder="Email or username" />
                                     </div>
-                                    <div className="form-group">
-                                        <label >Password</label>
-                                        <input className="form-control" value={Password} onChange={(e) => setPassword(e.target.value)} />
+                                    <div className="form-group mt-3">
+                                        
+                                        <input className="form-control" value={Password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                                     </div>
+                                    <h5 className="mt-3" ><Link to={'/forgotpasswordpage'} style={{textDecoration:"none" ,color:"grey"}}>Forgot Password</Link></h5>
                                     <div className="text-center mt-4">
                                         <button type="submit" className="btn btn-primary btn-block mt-4 form-control">Login</button>
                                     </div>

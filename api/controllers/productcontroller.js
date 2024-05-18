@@ -195,6 +195,3 @@ exports.singleproductfetch = async (req, res) => {
 //         })
 //     }
 // }
-
-
-
