@@ -4,7 +4,6 @@ app.use(express.json())
 const apirouter = require('./router/api')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const PORT = process.env.PORT || 3000
 mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
 
 
