@@ -3,7 +3,6 @@ const regco = require('../controllers/regcontroller')
 const productco = require('../controllers/productcontroller')
 const multer = require('multer')
 const authenticateToken = require('../middleware/jwtAuth')
-// const authenticateToken = require('../middleware/jwtAuth')
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
