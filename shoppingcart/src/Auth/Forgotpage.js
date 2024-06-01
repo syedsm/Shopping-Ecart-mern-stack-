@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import { Contextapi } from '../Contextapi';
 
 function ForgotPage() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+
+  const { themeMode } = useContext(Contextapi)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,8 +29,8 @@ function ForgotPage() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
-      <div className="card p-4" style={{ width: '30%' }}>
+    <div className={`container d-flex justify-content-center align-items-center ${themeMode === "dark" ? 'bg-dark text-white ' : 'bg-light text-dark'}`} style={{ height: '70vh' }}>
+      <div className={`card p-4 ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`} style={{ width: '30%',border:"2px solid white" }}>
         <h2 className="card-title text-center">Forgot Password</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

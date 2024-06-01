@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Contextapi } from "../Contextapi";
 
 function Reg() {
     const [Username, setUsername] = useState('')
@@ -7,17 +8,33 @@ function Reg() {
     const [Email, setEmail] = useState('')
     const [message, setMessage] = useState('')
 
+    const { themeMode } = useContext(Contextapi)
+
     function handleform(e) {
         e.preventDefault()
-        const data = { Username, Password,Email }
+        const data = { Username, Password, Email }
 
-        fetch('/api/reg', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        }).then((result) => { return result.json() }).then((data) => {
-            setMessage(data.message)
-        })
+        if (!Username && !Password) {
+            alert("Please Enter the User Complete Detail")
+            return
+        } else if (!Password) {
+            alert("Please Enter the User Password")
+            return
+        } else if (!Username) {
+            alert("Please Enter the User  Detail")
+            return
+        }
+        try {
+            fetch('/api/reg', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then((result) => { return result.json() }).then((data) => {
+                setMessage(data.message)
+            })
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     return (
@@ -25,7 +42,7 @@ function Reg() {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-4">
-                        <div className="card">
+                        <div className={`card  ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`} style={{ borderRadius: '10px', borderWidth: '2px', borderColor: themeMode === "dark" ? '#f8f9fa' : '', borderStyle: 'solid', boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)' }}>
                             <div className="card-body">
                                 <h2 className="card-title mb-4 text-center">Register</h2>
                                 <h6 className="text-center mb-3">{message}</h6>

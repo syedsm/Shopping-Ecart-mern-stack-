@@ -1,8 +1,8 @@
 const reg = require('../models/reg')
 const bcrypt = require('bcrypt')
 const nodemailer = require("nodemailer");
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
-
 
 exports.reg = async (req, res) => {
     // console.log(req.body)
@@ -45,12 +45,18 @@ exports.logincheck = async (req, res) => {
         // console.log(record)
         if (record !== null) {
             const passwordcompared = await bcrypt.compare(Password, record.password)
+            const token = jwt.sign(
+                { userId: record._id, username: Username, email: Username },
+                process.env.JWT_SECRET
+            );
+
+            // res.json({ token });
 
             if (passwordcompared) {
                 if (record.status == "Active") {
                     res.json({
                         status: 201,
-                        apiData: record
+                        apiData: { record, token }
                     })
                 }
                 else {
@@ -74,8 +80,6 @@ exports.logincheck = async (req, res) => {
             })
 
         }
-
-
 
     } catch (error) {
         res.json({
@@ -218,5 +222,82 @@ exports.resetpassword = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'An error occurred. Please try again later.' });
+    }
+}
+
+exports.singleuserfetch = async (req, res) => {
+    const loginname = req.params.loginname;
+    // console.log(loginname);
+    try {
+        const record = await reg.findOne({ username: loginname });
+        // console.log("record", record);
+        if (!record) {
+            return res.status(404).json({
+                status: 404,
+                message: "User not found",
+            });
+        }
+        // console.log(record);
+        res.json({
+            status: 201,
+            message: "Successfully fetched",
+            body: record,
+        });
+    } catch (error) {
+        // console.log(error.message);
+        res.status(500).json({
+            status: 500,
+            message: "Server Error",
+            error: error.message,
+        });
+    }
+};
+
+exports.updateUser = async (req, res) => {
+    const id = req.params.id;
+    const { username, email } = req.body;
+    const profileImage = req.file ? req.file.filename : null;
+
+    // console.log("userid:", id);
+    // console.log("loginname:", username);
+    // console.log("file image:", req.file);
+    // console.log("body:", req.body);
+
+    try {
+        // Find the current user data
+        const currentUser = await reg.findById(id);
+        // console.log(currentUser);
+
+        if (!currentUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update data
+        const updateData = {
+            username: username || currentUser.username,
+            email: email || currentUser.email,
+            profileimage: profileImage ? profileImage : currentUser.profileimage
+        };
+
+        const updatedUser = await reg.findByIdAndUpdate(id, updateData, { new: true });
+        // console.log("updatedUser:", updatedUser);
+
+        res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.userdelete=async(req,res)=>{
+    const id =req.params.id
+    // console.log("id",id);
+
+    try {
+        await reg.findByIdAndDelete(id)
+        res.json({message:"User deleted successfully"})
+        
+    } catch (error) {
+        console.log(error.message);
     }
 }

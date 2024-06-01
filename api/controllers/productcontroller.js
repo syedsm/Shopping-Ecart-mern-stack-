@@ -33,6 +33,7 @@ exports.productadd = (req, res) => {
 exports.allproducts = async (req, res) => {
     try {
         const record = await product.find()
+        // console.log(record);
         res.json({
             status: 200,
             apiData: record

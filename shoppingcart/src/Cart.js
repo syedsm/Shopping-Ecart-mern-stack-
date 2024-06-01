@@ -1,184 +1,171 @@
 import { useContext, useEffect, useState } from "react";
-import { Contextapi } from "./App";
-import { Link, useNavigate, useParams } from "react-router-dom";
-
+import { Contextapi } from "./Contextapi";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
-    const { cart, setCart, loginname } = useContext(Contextapi)
-    const [product, setProducts] = useState([])
-    const [message, setmessage] = useState()
-
-
-    let navigate = useNavigate()
-    let totalamount = 0
+    const { cart, setCart, loginname, themeMode } = useContext(Contextapi);
+    const [product, setProducts] = useState([]);
+    const [message, setMessage] = useState('');
+    let navigate = useNavigate();
+    let totalAmount = 0;
 
     useEffect(() => {
         if (!cart.item) {
-            return
+            return;
         }
         fetch('/api/cartproducts', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ids: Object.keys(cart.item) })
-        }).then((result) => { return result.json() }).then((data) => {
-            // console.log(data)
-            // console.log(data.apiData)
+        }).then((result) => result.json()).then((data) => {
             if (data.status === 200) {
-                setProducts(data.apiData)
+                setProducts(data.apiData);
             } else {
-                setmessage(data.message)
+                setMessage(data.message);
             }
-        })
-    }, [cart.item])
+        });
+    }, [cart.item]);
 
-    function handlequan(id) {
-        // let quantity = cart.items[id]
-        // return quantity
-        return cart.item[id]
+    function handleQuan(id) {
+        return cart.item[id];
     }
 
-    function handleincrement(e, id, qty) {
-        let currentqty = handlequan(id)
-        if (qty === currentqty) {
-            alert('Product Reached Maximum limit')
-            return
+    function handleIncrement(e, id, qty) {
+        let currentQty = handleQuan(id);
+        if (qty === currentQty) {
+            alert('Product Reached Maximum limit');
+            return;
         }
-        let _cart = { ...cart }
-        _cart.item[id] = currentqty + 1
-        _cart.totalItems += 1
-        setCart(_cart)
-
+        let _cart = { ...cart };
+        _cart.item[id] = currentQty + 1;
+        _cart.totalItems += 1;
+        setCart(_cart);
     }
 
-    function handledecre(e, id) {
-        let currentqty = handlequan(id)
-        if (currentqty === 1) {
-            return
+    function handleDecrement(e, id) {
+        let currentQty = handleQuan(id);
+        if (currentQty === 1) {
+            return;
         }
-        let _cart = { ...cart }
-        _cart.item[id] = currentqty - 1
-        _cart.totalItems -= 1
-        setCart(_cart)
+        let _cart = { ...cart };
+        _cart.item[id] = currentQty - 1;
+        _cart.totalItems -= 1;
+        setCart(_cart);
     }
 
-    function handleprice(id, price) {
-        let currentprice = handlequan(id) * price
-        totalamount += currentprice
-        return currentprice
+    function handlePrice(id, price) {
+        let currentPrice = handleQuan(id) * price;
+        totalAmount += currentPrice;
+        return currentPrice;
     }
 
-    function handlecheckout(e) {
+    function handleCheckout(e) {
         if (!loginname) {
-            navigate('/')
+            navigate('/');
             return;
         } else {
-            localStorage.setItem('cart', '')
-            setCart(localStorage.getItem('cart'))
-            navigate('/userproduct')
+            localStorage.setItem('cart', '');
+            setCart(JSON.stringify(localStorage.getItem('cart')));
+            navigate('/userproduct');
         }
     }
 
-    function handledelete(e, id) {
-        let current_qnty = handlequan(id);
-        console.log("current_qnty:", current_qnty);
-
-        // Filter out the item with the specified ID from the cart
+    function handleDelete(e, id) {
+        let currentQty = handleQuan(id);
         const updatedItems = Object.fromEntries(
             Object.entries(cart.item).filter(([itemId]) => itemId !== id)
         );
-
-        // Calculate the updated total number of items
-        const updatedTotalItems = cart.totalItems - current_qnty;
-
-        // Create the updated cart object
+        const updatedTotalItems = cart.totalItems - currentQty;
         const updatedCart = {
             ...cart,
             item: updatedItems,
             totalItems: updatedTotalItems
         };
-
-        // Update the cart state
         setCart(updatedCart);
     }
 
-    // function handledelete(e, id) {
-    //     let current_qnty = handlequan(id)
-    //     console.log("current_qnty:", current_qnty)
-    //     let _cart = { ...cart }
-    //     delete _cart.item[id]
-    //     _cart.totalItems -= current_qnty
-    //     setCart(_cart)
-    // }
-
-    // function handledelete(e,id){
-    //     let current_qnty=handlequan(id)
-    //     console.log("current",current_qnty)
-    //     let _cart={...cart}
-    //     console.log("_cart",_cart);
-    //    delete _cart.item[id]
-    //     _cart.totalItems -= current_qnty
-    //     console.log("_cart.totalitems",_cart.totalItems)
-    //     setCart(_cart)
-
-    // }
-
-    // function deleteproduct(id) {
-    //     // console.log(id)
-    //     // useEffect(()=>{
-    //         fetch(`/api/productdelete/${id}`, {
-    //             method: 'DELETE'
-    //         }).then((result) => { return result.json() }).then((data) => {
-    //             console.log(data)
-    //             if (data.status === 200) {
-    //                 navigate('/cart')
-    //             } else {
-    //                 message(message)
-    //             }
-    //         })
-    //     // },[])
-    // }
-
     return (
         <>
-            {product.length ?
-
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>S.NO</th>
-                            <th>product name</th>
-                            <th>product Image</th>
-                            <th>product Quantity</th>
-                            <th>product Price</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {product.map((result, key) => (
-                            <tr key={result._id}>
-                                <td>{key + 1}</td>
-                                <td>{result.name}</td>
-                                <td><img style={{ width: '100px' }} src={`/productimages/${result.img}`} alt="" /></td>
-                                <td><button onClick={(e) => { handleincrement(e, result._id, result.qty) }}>+</button>{handlequan(result._id)}<button onClick={(e) => { handledecre(e, result._id) }}>-</button></td>
-                                <td>{handleprice(result._id, result.price)}</td>
-                                <td>
-                                    {/* <Link to={`/delete/${result._id}`}> */}
-                                    <button onClick={(e) => { handledelete(e, result._id) }} className="btn btn-info"><i class="bi bi-x-lg"></i></button>
-                                    {/* </Link> */}
-                                </td>
-                            </tr>
-                        ))}
-                        <tr>
-                            <td colSpan="6"><h4 className="text-center">Total Amount : {totalamount} ₹</h4></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="6"><button className="btn btn-warning form-control" onClick={(e) => { handlecheckout(e) }}> Checkout</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                :
-                <img src="empty-cart.jpg" style={{ width: "45%" }} className="img-fluid rounded mx-auto d-block " alt="..." />
-            }
+            {message}
+            {product.length ? (
+                <div className={`container mt-5 ${themeMode === "dark" ? "dark-mode" : "light-mode"}`}>
+                    <div className="row">
+                        <div className="col-md-8">
+                            <div className={`card mb-3 ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
+                                <div className="card-header">
+                                    <h5>Cart Items</h5>
+                                </div>
+                                <div className="card-body">
+                                    <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Product Name</th>
+                                                <th>Product Image</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {product.map((result, key) => (
+                                                <tr key={result._id}>
+                                                    <td>{key + 1}</td>
+                                                    <td>{result.name}</td>
+                                                    <td><img className="product-image img-fluid" src={`/productimages/${result.img}`} alt={result.name} /></td>
+                                                    <td>
+                                                        <div className="quantity-control">
+                                                            <button className="btn btn-sm btn-primary rounded-circle" onClick={(e) => handleIncrement(e, result._id, result.qty)}>+</button>
+                                                            <span className="quantity-text">{handleQuan(result._id)}</span>
+                                                            <button className="btn btn-sm btn-primary rounded-circle" onClick={(e) => handleDecrement(e, result._id)}>-</button>
+                                                        </div>
+                                                    </td>
+                                                    <td>₹{handlePrice(result._id, result.price)}</td>
+                                                    <td>
+                                                        <button onClick={(e) => handleDelete(e, result._id)} className="btn btn-danger btn-sm"><i className="bi bi-x-lg"></i></button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className={`card ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
+                                <div className="card-header">
+                                    <h5>Order Summary</h5>
+                                </div>
+                                <div className="card-body">
+                                    <ul className="list-group list-group-flush">
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                                            Subtotal
+                                            <span>₹{totalAmount}</span>
+                                        </li>
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                                            Delivery Charges
+                                            <span>₹0</span>
+                                        </li>
+                                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                                            Total Amount
+                                            <span>₹{totalAmount}</span>
+                                        </li>
+                                    </ul>
+                                    <button className="btn btn-warning btn-block mt-3" onClick={handleCheckout}>Checkout</button>
+                                    <div className="text-center mt-3">
+                                        <span className="badge bg-success">Safe and Secure Payment</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className="text-center">
+                    <img src="empty-cart.png" className="img-fluid" alt="emptycart" style={{ width: "40%" }} />
+                    <h3>Your Cart is Empty</h3>
+                </div>
+            )}
         </>
     );
 }

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Contextapi } from '../Contextapi';
 
 function ResetPasswordPage() {
     const { email } = useParams();
@@ -8,6 +9,8 @@ function ResetPasswordPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+
+    const { themeMode } = useContext(Contextapi)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,9 +36,9 @@ function ResetPasswordPage() {
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
-            <div className="card p-4" style={{ width: '30%' }}>
-                <h2 className="card-title text-center">Reset Password</h2>
+        <div className="container  d-flex justify-content-center align-items-center"  style={{ height: '70vh' }} >
+            <div className={`card p-4 ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`} style={{ width: '30%', border: "2px solid white" }}>
+                <h2 className={`card-title text-center ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`}>Reset Password</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <input

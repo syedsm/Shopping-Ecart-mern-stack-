@@ -1,24 +1,32 @@
 import { Link } from "react-router-dom";
 import Left from "./Leftmenu";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios';
+import { Contextapi } from "../Contextapi";
 
 function Adminproduct() {
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
+    const { themeMode } = useContext(Contextapi);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
-        axios.get('/api/allproduct')
+        axios.get('/api/allproduct', {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
             .then((res) => {
                 setProducts(res.data.apiData);
-            })
-            .catch((error) => {
-                console.error("Error fetching products:", error);
             });
-    }, []);
+    }, [token]);
 
     const handleDeleteProduct = (id) => {
-        axios.delete(`/api/delete/${id}`)
+        axios.delete(`/api/delete/${id}`, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
             .then((response) => {
                 if (response.status === 200) {
                     setProducts(products.filter((product) => product._id !== id));
@@ -39,7 +47,7 @@ function Adminproduct() {
     };
 
     return (
-        <section id="mid">
+        <section id="mid" className={`${themeMode === "dark" ? "dark-mode" : "light-mode"}`}>
             <div className="container">
                 <div className="row">
                     <Left />
@@ -47,9 +55,9 @@ function Adminproduct() {
                         <h2 className="text-center">Product Management</h2>
                         <p>{message}</p>
                         <Link to='/adminproductadd'>
-                            <button className="btn btn-success form-control">Add Product here</button>
+                            <button className="btn btn-primary form-control">Add Product here</button>
                         </Link>
-                        <table className="table table-hover margin-left:30px">
+                        <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th>S.No</th>
