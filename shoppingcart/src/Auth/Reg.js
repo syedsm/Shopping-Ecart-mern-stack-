@@ -30,6 +30,7 @@ function Reg() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             }).then((result) => { return result.json() }).then((data) => {
+                console.log(data)
                 setMessage(data.message)
             })
         } catch (error) {
