@@ -24,18 +24,19 @@ function Reg() {
             alert("Please Enter the User  Detail")
             return
         }
-        try {
-            fetch('backend-livid-five-40.vercel.app/api/reg', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }).then((result) => { return result.json() }).then((data) => {
-                console.log(data)
-                setMessage(data.message)
-            })
-        } catch (error) {
-            console.log(error.message);
-        }
+    try {
+    fetch('https://backend-livid-five-40.vercel.app/api/reg', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then((result) => { return result.json() }).then((data) => {
+        console.log(data);
+        setMessage(data.message);
+    });
+} catch (error) {
+    console.log(error.message);
+}
+
     }
 
     return (
