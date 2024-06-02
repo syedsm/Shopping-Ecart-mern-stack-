@@ -39,5 +39,6 @@
       "last 1 safari version"
     ]
   },
+   "proxy": "https://backend-livid-five-40.vercel.app"
 
 }
