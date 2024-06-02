@@ -6,7 +6,7 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/server.js" }
   ]
-  
+  {
   "headers": [
     {
       "source": "/api/*",
@@ -15,6 +15,6 @@
       ]
     }
   ]
-
+}
 
 }
