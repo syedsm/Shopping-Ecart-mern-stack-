@@ -25,7 +25,7 @@ function Reg() {
             return
         }
         try {
-            fetch('/api/reg', {
+            fetch('backend-livid-five-40.vercel.app/api/reg', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
