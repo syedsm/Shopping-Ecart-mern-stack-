@@ -21,7 +21,7 @@ function Login() {
         } else {
             try {
                 const data = { Username, Password };
-                fetch('/api/logincheck', {
+                fetch('backend-livid-five-40.vercel.app/api/logincheck', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
