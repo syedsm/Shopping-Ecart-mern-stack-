@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
 
-app.get('/',(req,res)=>{
+app.get('/api/',(req,res)=>{
   res.send("Running")
 })
 app.use('/api', apirouter)
