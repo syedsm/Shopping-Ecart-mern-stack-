@@ -26,7 +26,7 @@ function Reg() {
         }
         
         try {
-            fetch('https://shopping-ecart-backend.onrender.com/api/reg', {
+            fetch('/api/reg', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
