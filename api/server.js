@@ -20,7 +20,10 @@ mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`, {
 app.use('/api', apirouter);
 app.use(express.static('public'));
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+
+app.get('/api/hello', (req, res) => {
+    res.status(200).json({ message: 'Hello from Vercel!' });
 });
+app.use('/api', apirouter)
+app.use(express.static('public'))
+app.listen(process.env.PORT, () => { console.log(`Server is running on ${process.env.PORT} `) })
