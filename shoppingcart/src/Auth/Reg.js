@@ -9,7 +9,7 @@ function Reg() {
     const [message, setMessage] = useState('')
 
     const { themeMode } = useContext(Contextapi)
-     console.log("env",process.env.REACT_APP_API_URL);
+    console.log("env", process.env.REACT_APP_API_URL);
     function handleform(e) {
         e.preventDefault()
         const data = { Username, Password, Email }
