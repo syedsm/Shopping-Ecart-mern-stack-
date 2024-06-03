@@ -25,7 +25,7 @@ function Reg() {
             return
         }
     try {
-    fetch('https://backend-livid-five-40.vercel.app/api/reg', {
+    fetch('https://shopping-ecart-backend.onrender.com/api/reg', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

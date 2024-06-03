@@ -7,7 +7,7 @@ function Usersproduct() {
     const [message, setmessage] = useState('');
     const { isDarkMode } = useContext(Contextapi)
     useEffect(() => {
-        fetch('/api/instockproducts', {}).then((result) => result.json()).then((data) => {
+        fetch('https://shopping-ecart-backend.onrender.com/api/instockproducts', {}).then((result) => result.json()).then((data) => {
             if (data.status === 200) {
                 setproducts(data.apiData);
             } else {

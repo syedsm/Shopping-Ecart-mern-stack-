@@ -22,7 +22,7 @@ function ResetPasswordPage() {
         }
 
         try {
-            const res = await axios.post('/api/resetpassword', { email, password });
+            const res = await axios.post('https://shopping-ecart-backend.onrender.com/api/resetpassword', { email, password });
             setMessage(res.data.message);
             setError('');
         } catch (error) {

@@ -21,7 +21,7 @@ function Login() {
         } else {
             try {
                 const data = { Username, Password };
-                fetch('backend-livid-five-40.vercel.app/api/logincheck', {
+                fetch('https://shopping-ecart-backend.onrender.com/api/logincheck', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)

@@ -19,7 +19,7 @@ function UserProfile() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch(`/api/singleuserfetch/${loginname}`, {
+    fetch(`https://shopping-ecart-backend.onrender.com/api/singleuserfetch/${loginname}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${token}`
@@ -96,7 +96,7 @@ function UserProfile() {
   const handleDelete = () => {
     if (confirmDelete()) {
       const id = profile._id;
-      axios.delete(`/api/userdelete/${id}`, {
+      axios.delete(`https://shopping-ecart-backend.onrender.com/api/userdelete/${id}`, {
         headers: {
           authorization: `Bearer ${token}`
         }
