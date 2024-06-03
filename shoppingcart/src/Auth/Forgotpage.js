@@ -13,7 +13,7 @@ function ForgotPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://shopping-ecart-backend.onrender.com/api/forgotpassword', { email });
+      const res = await axios.post('/api/forgotpassword', { email });
       setMessage(res.data.message);
       setError(''); // Clear any previous errors
       alert('Password reset link has been sent successfully!'); // Alert user about success

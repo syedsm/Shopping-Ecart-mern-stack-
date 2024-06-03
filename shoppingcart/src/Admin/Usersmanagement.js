@@ -12,7 +12,7 @@ function Usersmanag() {
     const token=localStorage.getItem('token')
 
     useEffect(() => {
-        fetch(`https://shopping-ecart-backend.onrender.com/api/usersfetch/${id}`, {
+        fetch(`/api/usersfetch/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }

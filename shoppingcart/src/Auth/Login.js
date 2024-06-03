@@ -21,7 +21,7 @@ function Login() {
         } else {
             try {
                 const data = { Username, Password };
-                fetch('https://shopping-ecart-backend.onrender.com/api/logincheck', {
+                fetch('/api/logincheck', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)

@@ -39,7 +39,7 @@ function Productadd() {
         data.append('qty', qty);
         data.append('img', img);
 
-        fetch('https://shopping-ecart-backend.onrender.com/api/productadd', {
+        fetch('/api/productadd', {
             method: "POST",
             body: data, headers: {
                 authorization: `Bearer ${token}`

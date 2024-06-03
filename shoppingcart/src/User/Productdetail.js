@@ -12,7 +12,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`https://shopping-ecart-backend.onrender.com/api/singleproductfetch/${id}`)
+    axios.get(`/api/singleproductfetch/${id}`)
       .then(response => {
         setProduct(response.data);
         setLoading(false);

@@ -13,7 +13,7 @@ function Cart() {
         if (!cart.item) {
             return;
         }
-        fetch('https://shopping-ecart-backend.onrender.com/api/cartproducts', {
+        fetch('/api/cartproducts', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ids: Object.keys(cart.item) })

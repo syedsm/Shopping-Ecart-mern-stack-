@@ -18,7 +18,7 @@ function Productupdate() {
     const token = localStorage.getItem('token')
 
     useEffect(() => {
-        fetch(`https://shopping-ecart-backend.onrender.com/api/singleproduct/${id}`, {
+        fetch(`/api/singleproduct/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -59,7 +59,7 @@ function Productupdate() {
         data.append('status', status);
         data.append('img', img);
 
-        fetch(`https://shopping-ecart-backend.onrender.com/api/productupdate/${id}`, {
+        fetch(`/api/productupdate/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             },

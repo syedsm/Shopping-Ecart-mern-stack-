@@ -11,7 +11,7 @@ function Adminproduct() {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        axios.get('https://shopping-ecart-backend.onrender.com/api/allproduct', {
+        axios.get('/api/allproduct', {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -22,7 +22,7 @@ function Adminproduct() {
     }, [token]);
 
     const handleDeleteProduct = (id) => {
-        axios.delete(`https://shopping-ecart-backend.onrender.com/api/delete/${id}`, {
+        axios.delete(`/api/delete/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
