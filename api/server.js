@@ -5,7 +5,21 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+const cors = require("cors")
 
+app.use(cors({
+    origin: 'https://shoppingecart.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
+app.options('*', cors({
+    origin: 'https://shoppingecart.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 
 // console.log(`Connecting to ${process.env.DB_URL}/${process.env.DB_NAME}`);
 mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`, {
