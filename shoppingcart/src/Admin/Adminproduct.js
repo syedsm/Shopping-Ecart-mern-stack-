@@ -11,7 +11,7 @@ function Adminproduct() {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        axios.get('/api/allproduct', {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/allproduct`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -22,7 +22,7 @@ function Adminproduct() {
     }, [token]);
 
     const handleDeleteProduct = (id) => {
-        axios.delete(`/api/delete/${id}`, {
+        axios.delete(`${process.env.REACT_APP_API_URL}/api/delete/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }

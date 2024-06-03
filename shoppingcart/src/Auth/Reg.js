@@ -9,7 +9,7 @@ function Reg() {
     const [message, setMessage] = useState('')
 
     const { themeMode } = useContext(Contextapi)
-
+     console.log("env",process.env.REACT_APP_API_URL);
     function handleform(e) {
         e.preventDefault()
         const data = { Username, Password, Email }
@@ -24,9 +24,9 @@ function Reg() {
             alert("Please Enter the User  Detail")
             return
         }
-        
+
         try {
-            fetch('https://shopping-ecart-backend.onrender.com/api/reg', {
+            fetch(`${process.env.REACT_APP_API_URL}/api/reg`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

@@ -18,7 +18,7 @@ function Productupdate() {
     const token = localStorage.getItem('token')
 
     useEffect(() => {
-        fetch(`/api/singleproduct/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/singleproduct/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -59,7 +59,7 @@ function Productupdate() {
         data.append('status', status);
         data.append('img', img);
 
-        fetch(`/api/productupdate/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/productupdate/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             },

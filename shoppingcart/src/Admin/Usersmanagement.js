@@ -12,7 +12,7 @@ function Usersmanag() {
     const token=localStorage.getItem('token')
 
     useEffect(() => {
-        fetch(`/api/usersfetch/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/usersfetch/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -32,7 +32,7 @@ function Usersmanag() {
             if (user._id === userId) {
                 const newStatus = user.status === "Active" ? "Suspend" : "Active";
                 // Send PUT request to update status in backend
-                axios.put(`/api/statusupdate/${userId}`, { status: newStatus },{
+                axios.put(`${process.env.REACT_APP_API_URL}/api/statusupdate/${userId}`, { status: newStatus },{
                     headers: {
                         authorization: `Bearer ${token}`
                     }

@@ -12,7 +12,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`/api/singleproductfetch/${id}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/singleproductfetch/${id}`)
       .then(response => {
         setProduct(response.data);
         setLoading(false);

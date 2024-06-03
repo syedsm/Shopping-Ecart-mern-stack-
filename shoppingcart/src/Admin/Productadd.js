@@ -39,7 +39,7 @@ function Productadd() {
         data.append('qty', qty);
         data.append('img', img);
 
-        fetch('/api/productadd', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/productadd`, {
             method: "POST",
             body: data, headers: {
                 authorization: `Bearer ${token}`

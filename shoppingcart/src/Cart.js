@@ -13,7 +13,7 @@ function Cart() {
         if (!cart.item) {
             return;
         }
-        fetch('/api/cartproducts', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/cartproducts`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ids: Object.keys(cart.item) })

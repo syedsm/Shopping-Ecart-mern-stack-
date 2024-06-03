@@ -7,7 +7,7 @@ function Usersproduct() {
     const [message, setmessage] = useState('');
     const { isDarkMode } = useContext(Contextapi)
     useEffect(() => {
-        fetch('/api/instockproducts', {}).then((result) => result.json()).then((data) => {
+        fetch(`${process.env.REACT_APP_API_URL}/api/instockproducts`, {}).then((result) => result.json()).then((data) => {
             if (data.status === 200) {
                 setproducts(data.apiData);
             } else {
