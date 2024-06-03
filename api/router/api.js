@@ -18,6 +18,10 @@ let upload = multer({
     limits: { fileSize: 1024 * 1024 * 4 }
 })
 
+router.get('/hello',(req,res)=>{
+       res.send("API RUNNING")
+};
+
 //Auth route
 router.post('/reg', regco.reg)
 router.post('/logincheck', regco.logincheck)
