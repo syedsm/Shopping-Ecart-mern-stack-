@@ -18,7 +18,7 @@ let upload = multer({
     limits: { fileSize: 1024 * 1024 * 4 }
 })
 
-router.get('/hello',(req,res)=>{
+router.get('/hello', (req,res)=>{
        res.send("API RUNNING")
 };
 
