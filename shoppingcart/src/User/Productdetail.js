@@ -13,6 +13,7 @@ function ProductDetail() {
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/api/singleproductfetch/${id}`)
+    // axios.get(`/api/singleproductfetch/${id}`)
       .then(response => {
         setProduct(response.data);
         setLoading(false);
@@ -45,10 +46,10 @@ function ProductDetail() {
 
 
   return (
-    <div className="container mt-4 ">
-      <div className="row" >
-        <div className="col-lg-5 mb-4" >
-          <div className={`card ${isDarkMode?'bg-dark text-white':'bg-light text-dark'}`} >
+    <div className="container mt-4">
+      <div className="row">
+        <div className="col-lg-5 mb-4">
+          <div className={`card ${isDarkMode ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
             {loading ? (
               <p className="p-4">Loading...</p>
             ) : product ? (
@@ -58,16 +59,16 @@ function ProductDetail() {
             )}
           </div>
         </div>
-        <div className="col-lg-7" >
+        <div className="col-lg-7">
           {loading ? (
             <p>Loading...</p>
           ) : product ? (
-            <div className={`card ${isDarkMode?'bg-dark text-white':'bg-light text-dark'}`} >
-              <div className="card-body" style={{  borderColor: isDarkMode ? 'text-white' : 'text-dark', border: '2px solid #dee2e6' }}>
+            <div className={`card ${isDarkMode ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
+              <div className="card-body" style={{ borderColor: isDarkMode ? 'text-white' : 'text-dark', border: '2px solid #dee2e6' }}>
                 <h2 className="card-title">{product.name}</h2>
                 <p className="card-text mb-4">{product.desc}</p>
                 <h3 className="card-text mb-3">Price: ${product.price}</h3>
-                <button className="btn btn-outline-primary  me-3" onClick={() => handlecart(product)}>Add to Cart</button>
+                <button className="btn btn-outline-primary me-3" onClick={() => handlecart(product)}>Add to Cart</button>
                 <button className="btn btn-outline-success">Buy Now</button>
               </div>
             </div>
@@ -77,6 +78,8 @@ function ProductDetail() {
         </div>
       </div>
     </div>
+
+
   );
 }
 
