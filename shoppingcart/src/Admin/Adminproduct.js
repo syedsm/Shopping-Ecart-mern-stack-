@@ -96,7 +96,9 @@ function Adminproduct() {
                             </table>
                             :
                             <>
+                            <div className="text-center mt-3 ">
                                 <h2>No Product Add</h2>
+                            </div>
                             </>
                         }
 
