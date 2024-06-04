@@ -19,7 +19,7 @@ function UserProfile() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/singleuserfetch/${loginname}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/singleuserfetch/${loginname}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${token}`
