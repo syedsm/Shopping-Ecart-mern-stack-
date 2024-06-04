@@ -57,47 +57,47 @@ function Adminproduct() {
                         <Link to='/adminproductadd'>
                             <button className="btn btn-primary form-control">Add Product here</button>
                         </Link>
-                        {products.length?
-                        <table className="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Product Name</th>
-                                    <th>Product Description</th>
-                                    <th>Product Price</th>
-                                    <th>Product Quantity</th>
-                                    <th>Product Status</th>
-                                    <th>Product Image</th>
-                                    <th>Action</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products.map((result, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{result.name}</td>
-                                        <td>{result.desc}</td>
-                                        <td>{result.price}</td>
-                                        <td>{result.qty}</td>
-                                        <td>{result.status}</td>
-                                        <td><img style={{ width: "65px" }} src={`/productimages/${result.img}`} alt="error" /></td>
-                                        <td>
-                                            <button className="btn btn-warning">
-                                                <Link style={{ textDecoration: "none", color: "white" }} to={`/productupdate/${result._id}`}>Update</Link>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-danger" onClick={() => confirmDelete(result._id)}>Delete</button>
-                                        </td>
+                        {products.length ?
+                            <table className="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Product Name</th>
+                                        <th>Product Description</th>
+                                        <th>Product Price</th>
+                                        <th>Product Quantity</th>
+                                        <th>Product Status</th>
+                                        <th>Product Image</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        :
-                        <>
-                        <h2>No Product Add</h2>
-                        </>
+                                </thead>
+                                <tbody>
+                                    {products.map((result, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{result.name}</td>
+                                            <td>{result.desc}</td>
+                                            <td>{result.price}</td>
+                                            <td>{result.qty}</td>
+                                            <td>{result.status}</td>
+                                            <td><img style={{ width: "65px" }} src={`/productimages/${result.img}`} alt="error" /></td>
+                                            <td>
+                                                <button className="btn btn-warning">
+                                                    <Link style={{ textDecoration: "none", color: "white" }} to={`/productupdate/${result._id}`}>Update</Link>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-danger" onClick={() => confirmDelete(result._id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            :
+                            <>
+                                <h2>No Product Add</h2>
+                            </>
                         }
 
                     </div>
