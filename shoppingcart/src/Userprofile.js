@@ -20,6 +20,7 @@ function UserProfile() {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/singleuserfetch/${loginname}`, {
+      // fetch(`/api/singleuserfetch/${loginname}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${token}`
@@ -121,17 +122,16 @@ function UserProfile() {
 
   return (
     <div className="container mt-5">
-      <div className="row justify-content-center align-items-center">
-        <div className="col-md-4">
-          <div className={`card ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`} style={{ border: themeMode ? "2px solid white" : "" }}>
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-4">
+          <div className={`card ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'} border-${themeMode ? "light" : "dark"}`}>
             <div className="card-header text-center">
               <h2>User Profile</h2>
               <img
                 src={imagePreview || `/productimages/${profile.profileimage}`}
                 alt="Profile"
-                className="rounded-circle"
-                width="150"
-                height="150"
+                className="rounded-circle img-fluid mb-3"
+                style={{ cursor: 'pointer', width: '150px', height: '150px', objectFit: 'cover' }}
                 onClick={() => document.getElementById('profileimage').click()}
               />
               <input
@@ -143,7 +143,7 @@ function UserProfile() {
               />
             </div>
             <div className="card-body">
-              <div className="form-group">
+              <div className="form-group mb-3">
                 <label htmlFor="username">Username:</label>
                 <input
                   type="text"
@@ -154,7 +154,7 @@ function UserProfile() {
                   onChange={handleChange}
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group mb-3">
                 <label htmlFor="email">Email:</label>
                 <input
                   type="email"
@@ -165,17 +165,20 @@ function UserProfile() {
                   onChange={handleChange}
                 />
               </div>
-              <button className="btn btn-primary align-item-center mt-3 me-3" onClick={handleUpdate}>
-                Update Profile
-              </button>
-              <button className="btn btn-danger align-item-center mt-3" onClick={handleDelete}>
-                Deactivate Account
-              </button>
+              <div className="d-flex justify-content-between">
+                <button className="btn btn-primary mt-3 w-48" onClick={handleUpdate}>
+                  Update Profile
+                </button>
+                <button className="btn btn-danger mt-3 w-48" onClick={handleDelete}>
+                  Deactivate Account
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 }
 

@@ -9,7 +9,6 @@ function ForgotPage() {
 
   const { themeMode } = useContext(Contextapi)
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -14,6 +14,7 @@ function Cart() {
             return;
         }
         fetch(`${process.env.REACT_APP_API_URL}/api/cartproducts`, {
+        // fetch('/api/cartproducts', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ids: Object.keys(cart.item) })
@@ -90,48 +91,50 @@ function Cart() {
             {product.length ? (
                 <div className={`container mt-5 ${themeMode === "dark" ? "dark-mode" : "light-mode"}`}>
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="col-lg-8 col-md-12">
                             <div className={`card mb-3 ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
                                 <div className="card-header">
                                     <h5>Cart Items</h5>
                                 </div>
                                 <div className="card-body">
-                                    <table className="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>S.No</th>
-                                                <th>Product Name</th>
-                                                <th>Product Image</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {product.map((result, key) => (
-                                                <tr key={result._id}>
-                                                    <td>{key + 1}</td>
-                                                    <td>{result.name}</td>
-                                                    <td><img className="product-image img-fluid" src={`/productimages/${result.img}`} alt={result.name} /></td>
-                                                    <td>
-                                                        <div className="quantity-control">
-                                                            <button className="btn btn-sm btn-primary rounded-circle" onClick={(e) => handleIncrement(e, result._id, result.qty)}>+</button>
-                                                            <span className="quantity-text">{handleQuan(result._id)}</span>
-                                                            <button className="btn btn-sm btn-primary rounded-circle" onClick={(e) => handleDecrement(e, result._id)}>-</button>
-                                                        </div>
-                                                    </td>
-                                                    <td>₹{handlePrice(result._id, result.price)}</td>
-                                                    <td>
-                                                        <button onClick={(e) => handleDelete(e, result._id)} className="btn btn-danger btn-sm"><i className="bi bi-x-lg"></i></button>
-                                                    </td>
+                                    <div className="table-responsive">
+                                        <table className="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Product Name</th>
+                                                    <th>Product Image</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Delete</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {product.map((result, key) => (
+                                                    <tr key={result._id}>
+                                                        <td>{key + 1}</td>
+                                                        <td>{result.name}</td>
+                                                        <td><img className="img-fluid" src={`/productimages/${result.img}`} alt={result.name} style={{ maxWidth: '50px' }} /></td>
+                                                        <td>
+                                                            <div className="d-flex align-items-center">
+                                                                <button className="btn btn-sm btn-primary rounded-circle me-2" onClick={(e) => handleIncrement(e, result._id, result.qty)}>+</button>
+                                                                <span className="me-2">{handleQuan(result._id)}</span>
+                                                                <button className="btn btn-sm btn-primary rounded-circle" onClick={(e) => handleDecrement(e, result._id)}>-</button>
+                                                            </div>
+                                                        </td>
+                                                        <td>₹{handlePrice(result._id, result.price)}</td>
+                                                        <td>
+                                                            <button onClick={(e) => handleDelete(e, result._id)} className="btn btn-danger btn-sm"><i className="bi bi-x-lg"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4 col-md-12">
                             <div className={`card ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
                                 <div className="card-header">
                                     <h5>Order Summary</h5>
@@ -151,7 +154,7 @@ function Cart() {
                                             <span>₹{totalAmount}</span>
                                         </li>
                                     </ul>
-                                    <button className="btn btn-warning btn-block mt-3" onClick={handleCheckout}>Checkout</button>
+                                    <button className="btn btn-warning btn-block mt-3 w-100" onClick={handleCheckout}>Checkout</button>
                                     <div className="text-center mt-3">
                                         <span className="badge bg-success">Safe and Secure Payment</span>
                                     </div>
@@ -166,6 +169,7 @@ function Cart() {
                     <h3>Your Cart is Empty</h3>
                 </div>
             )}
+
         </>
     );
 }

@@ -21,8 +21,8 @@ function Login() {
         } else {
             try {
                 const data = { Username, Password };
-                // fetch(`${process.env.REACT_APP_API_URL}/api/logincheck`, {
-                    fetch('/api/logincheck', {
+                fetch(`${process.env.REACT_APP_API_URL}/api/logincheck`, {
+                    // fetch('/api/logincheck', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
