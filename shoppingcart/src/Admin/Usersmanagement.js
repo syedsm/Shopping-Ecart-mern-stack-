@@ -13,6 +13,7 @@ function Usersmanag() {
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/api/usersfetch/${id}`, {
+            // fetch(`/api/usersfetch/${id}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }

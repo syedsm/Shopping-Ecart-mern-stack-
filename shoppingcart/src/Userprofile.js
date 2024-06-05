@@ -69,6 +69,7 @@ function UserProfile() {
 
       const id = profile._id;
       axios.put(`${process.env.REACT_APP_API_URL}/api/userprofileupdate/${id}`, formData, {
+      // axios.put(`/api/userprofileupdate/${id}`, formData, {
         headers: {
           authorization: `Bearer ${token}`
         }
@@ -98,6 +99,7 @@ function UserProfile() {
     if (confirmDelete()) {
       const id = profile._id;
       axios.delete(`${process.env.REACT_APP_API_URL}/api/userdelete/${id}`, {
+        // axios.delete(`/api/userdelete/${id}`, {
         headers: {
           authorization: `Bearer ${token}`
         }

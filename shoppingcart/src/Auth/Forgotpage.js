@@ -14,15 +14,15 @@ function ForgotPage() {
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/forgotpassword`, { email });
       setMessage(res.data.message);
-      setError(''); // Clear any previous errors
-      alert('Password reset link has been sent successfully!'); // Alert user about success
+      setError(''); 
+      alert('Password reset link has been sent successfully!'); 
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message);
-        setMessage(''); // Clear any previous success messages
+        setMessage(''); 
       } else {
         setError('An error occurred. Please try again later.');
-        setMessage(''); // Clear any previous success messages
+        setMessage(''); 
       }
     }
   };

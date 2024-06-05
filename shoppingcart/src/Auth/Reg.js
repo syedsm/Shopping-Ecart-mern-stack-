@@ -27,6 +27,7 @@ function Reg() {
 
         try {
             fetch(`${process.env.REACT_APP_API_URL}/api/reg`, {
+                // fetch('/api/reg', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

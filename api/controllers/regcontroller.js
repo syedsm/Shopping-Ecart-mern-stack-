@@ -4,38 +4,44 @@ const nodemailer = require("nodemailer");
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
+
+
 exports.reg = async (req, res) => {
     // console.log(req.body)
-    const { Username, Password, Email } = req.body
-    try {
-        const userCheck = await reg.findOne({ $or: [{ email: Email }, { password: Password }] });
-        // const usercheck = await reg.findOne({ username: Username })
-        //  console.log("userCheck", userCheck)
-        if (userCheck == null) {
-            const convertedpass = await bcrypt.hash(Password, 10)
-            const record = new reg({ username: Username, password: convertedpass, email: Email })
-            // console.log(record);
-            record.save()
-            res.json({
-                status: 201,
-                apiData: record,
-                message: "Successfully account has been Created "
-            })
-        } else {
-            res.json({
-                status: 400,
-                message: `${Username} Username Already taken`
-            })
+    const { Username, Password, Email } = req.body;
 
+    try {
+        const userCheck = await reg.findOne({
+            $or: [{ email: Email }, { username: Username }]
+        });
+        //  console.log("userCheck", userCheck)
+
+        if (userCheck) {
+            const takenField = userCheck.email === Email ? 'email' : 'username';
+            const takenValue = takenField === 'email' ? Email : Username;
+            return res.json({
+                status: 400,
+                message: `The ${takenField} ${takenValue} is already taken`
+            });
         }
+
+        const convertedPass = await bcrypt.hash(Password, 10);
+        const record = new reg({ username: Username, password: convertedPass, email: Email });
+        await record.save();
+        // console.log(record);
+
+        res.json({
+            status: 201,
+            apiData: record,
+            message: "Account has been successfully created"
+        });
     } catch (error) {
         res.json({
             status: 400,
             message: error.message
-        })
-
+        });
     }
-}
+};
 
 exports.logincheck = async (req, res) => {
     // console.log(req.body)
@@ -289,14 +295,14 @@ exports.updateUser = async (req, res) => {
     }
 };
 
-exports.userdelete=async(req,res)=>{
-    const id =req.params.id
+exports.userdelete = async (req, res) => {
+    const id = req.params.id
     // console.log("id",id);
 
     try {
         await reg.findByIdAndDelete(id)
-        res.json({message:"User deleted successfully"})
-        
+        res.json({ message: "User deleted successfully" })
+
     } catch (error) {
         console.log(error.message);
     }
