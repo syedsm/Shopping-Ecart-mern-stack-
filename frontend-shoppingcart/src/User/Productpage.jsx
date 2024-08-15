@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Contextapi } from "@/Contextapi.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Categoryleft } from "./categoryleft";
+import { Categoryleft } from "./Categoryleft";
 import Footerpage from "./Footerpage";
 
 function Usersproduct() {
