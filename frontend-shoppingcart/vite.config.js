@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
-  console.log('API URL in Viteconfig:', https://shopping-ecart-backend.onrender.com);
+  
 
   return {
     plugins: [react()],
