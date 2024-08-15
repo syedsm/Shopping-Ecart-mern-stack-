@@ -14,7 +14,8 @@ function ProductDetail() {
 
   useEffect(() => {
     axios
-      .get(`/api/singleproductfetch/${id}`)
+      // .get(`/api/singleproductfetch/${id}`)
+      .get(`${import.meta.env.VITE_SERVER_URL}/api/singleproductfetch/${id}`)
       .then((response) => {
         setProduct(response.data);
         setLoading(false);

@@ -19,7 +19,8 @@ function UserProfile() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch(`/api/singleuserfetch/${loginname}`, {
+    // fetch(`/api/singleuserfetch/${loginname}`, {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/singleuserfetch/${loginname}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${token}`
@@ -67,7 +68,8 @@ function UserProfile() {
       }
 
       const id = profile._id;
-      axios.put(`/api/userprofileupdate/${id}`, formData, {
+      // axios.put(`/api/userprofileupdate/${id}`, formData, {
+      axios.put(`${import.meta.env.VITE_SERVER_URL}/api/userprofileupdate/${id}`, formData, {
         headers: {
           authorization: `Bearer ${token}`
         }
@@ -96,7 +98,8 @@ function UserProfile() {
   const handleDelete = () => {
     if (confirmDelete()) {
       const id = profile._id;
-      axios.delete(`/api/userdelete/${id}`, {
+      // axios.delete(`/api/userdelete/${id}`, {
+      axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/userdelete/${id}`, {
         headers: {
           authorization: `Bearer ${token}`
         }

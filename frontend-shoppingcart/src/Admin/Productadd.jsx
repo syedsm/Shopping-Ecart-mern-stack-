@@ -56,7 +56,8 @@ function Productadd() {
     data.append("category", Fromdata.category);
 
     try {
-      const response = await fetch("/api/productadd", {
+      // const response = await fetch("/api/productadd", {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/productadd`, {
         method: "POST",
         body: data,
         headers: {

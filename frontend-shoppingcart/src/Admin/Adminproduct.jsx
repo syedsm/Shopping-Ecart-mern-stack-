@@ -12,7 +12,8 @@ function Adminproduct() {
 
   useEffect(() => {
     axios
-      .get("/api/allproduct", {
+      // .get("/api/allproduct", {
+      .get(`${import.meta.env.VITE_SERVER_URL}/api/allproduct`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -25,7 +26,8 @@ function Adminproduct() {
 
   const handleDeleteProduct = (id) => {
     axios
-      .delete(`/api/delete/${id}`, {
+      // .delete(`/api/delete/${id}`, {
+      .delete(`${import.meta.env.VITE_SERVER_URL}/api/delete/${id}`, {
         headers: {
           authorization: `Bearer ${token}`,
         },

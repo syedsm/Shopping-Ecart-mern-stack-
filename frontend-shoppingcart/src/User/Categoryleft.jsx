@@ -5,7 +5,8 @@ export const Categoryleft = ({ onFilter }) => {
   const categories = ["Electronics", "Toys", "Clothes", "Furniture"];
 
   const handleCategory = (category) => {
-    axios.get(`/api/categoryfilter/${category}`).then((res) => {
+    // axios.get(`/api/categoryfilter/${category}`).then((res) => {
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/api/categoryfilter/${category}`).then((res) => {
       onFilter(res.data.apiData);
     });
   };

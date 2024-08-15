@@ -26,7 +26,8 @@ function Reg() {
     }
 
     try {
-      fetch("/api/reg", {
+      fetch(`${import.meta.env.VITE_SERVER_URL}/api/reg`, {
+        // fetch('/api/reg', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

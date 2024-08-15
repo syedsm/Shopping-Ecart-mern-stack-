@@ -12,7 +12,8 @@ function Usersmanag() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch(`/api/usersfetch/${id}`, {
+    // fetch(`/api/usersfetch/${id}`, {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/usersfetch/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -34,7 +35,8 @@ function Usersmanag() {
         // Send PUT request to update status in backend
         axios
           .put(
-            `/api/statusupdate/${userId}`,
+            // `/api/statusupdate/${userId}`,
+            `${import.meta.env.VITE_SERVER_URL}/api/statusupdate/${userId}`,
             { status: newStatus },
             {
               headers: {

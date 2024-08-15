@@ -15,7 +15,8 @@ function Cart() {
     // if (!cartitem.item) {
     //   return;
     // }
-    fetch("/api/cartproducts", {
+    // fetch("/api/cartproducts", {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/cartproducts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ids: Object.keys(cartitem.item) }),

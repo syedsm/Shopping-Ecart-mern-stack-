@@ -19,7 +19,8 @@ function Productupdate() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch(`/api/singleproduct/${id}`, {
+    // fetch(`/api/singleproduct/${id}`, {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/singleproduct/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -62,7 +63,8 @@ function Productupdate() {
     data.append("status", status);
     data.append("img", img);
 
-    fetch(`/api/productupdate/${id}`, {
+    // fetch(`/api/productupdate/${id}`, {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/productupdate/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },

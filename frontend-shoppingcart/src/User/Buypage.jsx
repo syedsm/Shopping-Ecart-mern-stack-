@@ -30,7 +30,8 @@ function Buypage() {
         setLoading(true);
 
         if (buyitem && buyitem.item) {
-          const res = await axios.post("/api/buycheck/", {
+          // const res = await axios.post("/api/buycheck/", {
+          const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/buycheck/`, {
             ids: Object.keys(buyitem.item),
           });
 

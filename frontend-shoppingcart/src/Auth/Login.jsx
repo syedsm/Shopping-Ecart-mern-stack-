@@ -13,7 +13,7 @@ function Login() {
   function handlelogin(e) {
     e.preventDefault();
     // console.log(Username, Password);
-  
+
     if (!Username && !Password) {
       alert("Please Enter the Complete User Details");
     } else if (!Password) {
@@ -23,9 +23,11 @@ function Login() {
     } else {
       try {
         const data = { Username, Password };
-  
-        axios.post('/api/logincheck', data)
-          .then(res => {
+
+        axios
+          .post(`${import.meta.env.VITE_SERVER_URL}/api/logincheck`, data)
+          // axios.post('/api/logincheck', data)
+          .then((res) => {
             // console.log("data",res);
             const apiData = res.data.apiData;
             if (res.data.status === 201) {
@@ -33,7 +35,7 @@ function Login() {
               setloginname(localStorage.getItem("loginname"));
               localStorage.setItem("token", apiData.token);
               setToken(localStorage.getItem("token"));
-  
+
               if (apiData.record.username.toLowerCase() === "admin") {
                 navigate("/dashboard");
               } else {
@@ -43,16 +45,15 @@ function Login() {
               setMessage(apiData.message);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("Error:", error.message);
           });
-          
       } catch (error) {
         console.log("Error:", error.message);
       }
     }
   }
-  
+
   return (
     <section
       id="login"

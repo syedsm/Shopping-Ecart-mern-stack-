@@ -12,7 +12,8 @@ function Usersproduct() {
 
   useEffect(() => {
     axios
-      .get("/api/instockproducts")
+      // .get("/api/instockproducts")
+      .get(`${import.meta.env.VITE_SERVER_URL}/api/instockproducts`)
       .then((response) => {
         if (response.status === 200) {
           setProducts(response.data.apiData || []);
