@@ -24,7 +24,7 @@ function Login() {
       try {
         const data = { Username, Password };
   
-        axios.post(`${import.meta.env.VITE_SERVER_URL}/api/logincheck`, data)
+        axios.post('/api/logincheck', data)
           .then(res => {
             // console.log("data",res);
             const apiData = res.data.apiData;
