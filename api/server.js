@@ -9,7 +9,8 @@ app.use(express.json());
 const cors = require("cors")
 
 app.use(cors({
-    origin: 'https://shoppingecart.vercel.app',
+    // origin: 'https://shoppingecart.vercel.app',
+    origin:"https://shopping-ecart-mern-stack-fd9mbmke8-syedsms-projects.vercel.app",
     // origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
