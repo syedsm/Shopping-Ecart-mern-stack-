@@ -11,11 +11,11 @@ function Cart() {
   let totalAmount = 0;
 
   useEffect(() => {
-    console.log("cart_Items", cartitem);
-    // if (!cartitem.item) {
-    //   return;
-    // }
-    // fetch("/api/cartproducts", {
+    if (!cartitem || !cartitem.item) {
+      console.warn("Cart items are not defined");
+      return;
+    }
+
     fetch(`${import.meta.env.VITE_SERVER_URL}/api/cartproducts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -24,37 +24,19 @@ function Cart() {
       .then((result) => result.json())
       .then((data) => {
         if (data.status === 200) {
-          console.log(data.apiData);
           setProducts(data.apiData);
         } else {
           setMessage(data.message);
         }
+      })
+      .catch((error) => {
+        console.error("Error fetching cart products:", error);
+        setMessage("Failed to load cart products");
       });
   }, [cartitem.item, cartitem, buyitem]);
 
-  // useEffect(() => {
-  //   console.log("Buy_Items", buyitem);
-  //   if (!cartitem.item) {
-  //     return;
-  //   }
-  //   fetch("/api/cartproducts", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ ids: Object.keys(buyitem.item) }),
-  //   })
-  //     .then((result) => result.json())
-  //     .then((data) => {
-  //       if (data.status === 200) {
-  //         console.log(data.apiData);
-  //         setProducts(data.apiData);
-  //       } else {
-  //         setMessage(data.message);
-  //       }
-  //     });
-  // }, [buyitem.item, buyitem]);
-
   function handleQuan(id) {
-    return cartitem.item[id];
+    return cartitem.item ? cartitem.item[id] : 0;
   }
 
   function handleIncrement(e, id, qty) {
@@ -100,7 +82,7 @@ function Cart() {
       return;
     } else {
       localStorage.setItem("cart", "");
-      setcartitem(JSON.stringify(localStorage.getItem("cart")));
+      setcartitem(JSON.parse(localStorage.getItem("cart") || "{}"));
       navigate("/userproduct");
     }
   }
