@@ -46,7 +46,7 @@ exports.reg = async (req, res) => {
 exports.logincheck = async (req, res) => {
     // console.log(req.body)
     try {
-        const { Username, Password } = req.body
+        const { Username,Password } = req.body
         const record = await reg.findOne({ $or: [{ email: Username }, { username: Username }] })
         // console.log(record)
         if (record !== null) {

@@ -1,34 +1,40 @@
 const product = require('../models/products')
 const checkout = require('../models/checkout')
 
-exports.productadd = (req, res) => {
-    // console.log(req.body)
-    // console.log(req.file)
+exports.productadd = async (req, res) => {
+    // console.log("All data", req.body);
+    // console.log("Requested File", req.file);
 
-    const { name, desc, price, qty } = req.body
+    const { name, desc, price, qty, category } = req.body;
+
     try {
+        let record;
         if (req.file) {
-            const filename = req.file.filename
-            var record = new product({ name: name, desc: desc, price: price, qty: qty, img: filename })
-            record.save()
-            // console.log(record)
+            const filename = req.file.filename;
+            record = new product({ name, desc, price, qty, img: filename, category });
         } else {
-            var record = new product({ name: name, desc: desc, price: price, qty: qty })
-            record.save()
-            // console.log(record)
+            record = new product({ name, desc, price, qty, category });
         }
-        res.json({
+
+        // Save the product to the database
+        await record.save();
+
+        // console.log("Data Saved", record);
+
+        res.status(201).json({
             status: 201,
             apiData: record,
-            message: 'Successfully product has been Added'
-        })
+            message: 'Product has been successfully added'
+        });
     } catch (error) {
-        res.json({
+        console.error("Error saving product:", error.message);
+
+        res.status(400).json({
             status: 400,
             message: error.message
-        })
+        });
     }
-}
+};
 
 exports.allproducts = async (req, res) => {
     try {
@@ -114,9 +120,10 @@ exports.delete = async (req, res) => {
 exports.instockproducts = async (req, res) => {
     try {
         const record = await product.find({ status: 'IN-STOCK' })
+        // console.log(record);
         res.json({
             status: 200,
-            message: "Successfully delivered ",
+            message: "Successfully delivered",
             apiData: record
         })
     } catch (error) {
@@ -162,6 +169,50 @@ exports.singleproductfetch = async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 }
+
+exports.categoryfilter = async (req, res) => {
+    // console.log("categoryfilter", req.params.category);
+    const category = req.params.category
+    try {
+        // Filter products by category and status
+        const filteredProducts = await product.find({
+            category: category,
+            status: "IN-STOCK"
+        });
+        // console.log(filteredProducts);
+        res.status(200).json({
+            message: "Successfully filtered Data",
+            apiData: filteredProducts
+        })
+
+    } catch (error) {
+        console.error("Error During Fetching Data ", error.message);
+        res.status(400).json({
+            message: err.message,
+        })
+    }
+
+
+}
+
+exports.buycheck = async (req, res) => {
+    try {
+        // console.log(req.body);
+        const { ids } = req.body
+        const record = await product.findOne({ _id: ids });
+        // console.log("found record", record);
+
+        if (record) {
+            res.status(200).json({ success: true, record });
+        } else {
+            res.status(404).json({ success: false, message: "Record not found" });
+        }
+    } catch (error) {
+        console.error("Error finding record", error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
+
 
 // exports.cartvalue = async (req, res) => {
 //     const username = req.params.loginname

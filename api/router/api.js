@@ -1,22 +1,10 @@
 const router = require('express').Router()
 const regco = require('../controllers/regcontroller')
 const productco = require('../controllers/productcontroller')
-const multer = require('multer')
 const authenticateToken = require('../middleware/jwtAuth')
+const multerupload = require("../middleware/multer")
 
-let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '../shoppingcart/public/productimages')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + file.originalname)
-    }
-})
 
-let upload = multer({
-    storage: storage,
-    limits: { fileSize: 1024 * 1024 * 4 }
-})
 
 router.get('/helo', (req, res) => {
     res.send("API RUNNING")
@@ -28,17 +16,22 @@ router.post('/logincheck', regco.logincheck)
 router.post('/forgotpassword', regco.forgotpassword)
 router.post('/resetpassword', regco.resetpassword)
 
+
+//user Route
+router.get('/categoryfilter/:category',productco.categoryfilter)
+router.post("/buycheck",productco.buycheck)
+
 //Admin Route
-router.post('/productadd', authenticateToken, upload.single('img'), productco.productadd)
+router.post('/productadd', authenticateToken, multerupload.single('img'), productco.productadd);
 router.get('/allproduct', authenticateToken, productco.allproducts)
 router.get('/singleproduct/:id', authenticateToken, productco.singleupdate)
-router.put('/productupdate/:id', authenticateToken, upload.single('img'), productco.productupdate)
+router.put('/productupdate/:id', authenticateToken, multerupload.single('img'), productco.productupdate)
 router.delete('/delete/:id', authenticateToken, productco.delete)
 router.get('/userupdate/:id', authenticateToken, regco.userupdate)
 router.get('/usersfetch/:id', authenticateToken, regco.userfetch)
 router.put('/statusupdate/:id', authenticateToken, regco.update)
 router.get('/singleuserfetch/:loginname', authenticateToken, regco.singleuserfetch)
-router.put('/userprofileupdate/:id', upload.single('profileimage'), regco.updateUser)
+router.put('/userprofileupdate/:id', multerupload.single('profileimage'), regco.updateUser)
 router.delete('/userdelete/:id', authenticateToken, regco.userdelete)
 router.get('/instockproducts', productco.instockproducts)
 router.post('/cartproducts', productco.cartproducts)
