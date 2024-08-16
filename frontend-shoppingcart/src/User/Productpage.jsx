@@ -93,21 +93,21 @@ function Usersproduct() {
               <div className="carousel-inner">
                 <div className="carousel-item active">
                   <img
-                    src="./public/productimages/demophoto.jpeg"
+                    src="../productimages/demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="./public/productimages/2demophoto.jpeg"
+                    src="../productimages/2demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="./public/productimages/3demophoto.jpeg"
+                    src="../productimages/3demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
