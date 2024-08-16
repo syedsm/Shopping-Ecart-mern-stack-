@@ -237,7 +237,7 @@ function Cart() {
       ) : (
         <div className="text-center">
           <img
-            src="empty-cart.png"
+            src="./empty-cart.png"
             className="img-fluid"
             alt="emptycart"
             style={{ width: "40%" }}
