@@ -31,9 +31,12 @@ function Buypage() {
 
         if (buyitem && buyitem.item) {
           // const res = await axios.post("/api/buycheck/", {
-          const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/buycheck/`, {
-            ids: Object.keys(buyitem.item),
-          });
+          const res = await axios.post(
+            `${import.meta.env.VITE_SERVER_URL}/api/buycheck/`,
+            {
+              ids: Object.keys(buyitem.item),
+            }
+          );
 
           if (res.status === 200) {
             const record = res.data.record;
@@ -80,7 +83,7 @@ function Buypage() {
   };
 
   return (
-    <div className="container mt-5 " style={{ padding: "100px 50px" }}>
+    <div id="buypage" className="container mt-5">
       <div className="row">
         {/* Left side: Product details */}
         <div className="col-12 col-md-6 mb-4">
@@ -93,7 +96,7 @@ function Buypage() {
                 <img
                   src={`./public/productimages/${data.img}`}
                   alt="Product"
-                  className="img-fluid w-25"
+                  className="img-fluid"
                 />
               </div>
               <h4 className="text-muted text-center text-md-start">
@@ -114,6 +117,7 @@ function Buypage() {
             <div className="card-body">
               <h2 className="card-title text-center">Billing Address</h2>
               <form onSubmit={handleSubmit}>
+                {/* Form fields */}
                 <div className="row">
                   <div className="col-12 col-md-6 mb-3">
                     <div className="form-group">
@@ -122,9 +126,7 @@ function Buypage() {
                         type="text"
                         className="form-control"
                         value={firstName}
-                        onChange={(e) => {
-                          setfirstName(e.target.value);
-                        }}
+                        onChange={(e) => setfirstName(e.target.value)}
                         required
                         placeholder="First Name"
                       />
@@ -137,9 +139,7 @@ function Buypage() {
                         type="text"
                         className="form-control"
                         value={lastName}
-                        onChange={(e) => {
-                          setlastName(e.target.value);
-                        }}
+                        onChange={(e) => setlastName(e.target.value)}
                         required
                         placeholder="Last Name"
                       />
@@ -151,12 +151,10 @@ function Buypage() {
                     <div className="form-group">
                       <label>City</label>
                       <input
-                        type="string"
+                        type="text"
                         className="form-control"
                         value={city}
-                        onChange={(e) => {
-                          setcity(e.target.value);
-                        }}
+                        onChange={(e) => setcity(e.target.value)}
                         required
                         placeholder="City"
                       />
@@ -169,9 +167,7 @@ function Buypage() {
                         type="text"
                         className="form-control"
                         value={state}
-                        onChange={(e) => {
-                          setstate(e.target.value);
-                        }}
+                        onChange={(e) => setstate(e.target.value)}
                         required
                         placeholder="State"
                       />
@@ -186,9 +182,7 @@ function Buypage() {
                         type="number"
                         className="form-control"
                         value={zip}
-                        onChange={(e) => {
-                          setzip(e.target.value);
-                        }}
+                        onChange={(e) => setzip(e.target.value)}
                         required
                         placeholder="ZIP Code"
                       />
@@ -200,9 +194,7 @@ function Buypage() {
                       <select
                         value={country}
                         className="form-control"
-                        onChange={(e) => {
-                          setcountry(e.target.value);
-                        }}
+                        onChange={(e) => setcountry(e.target.value)}
                         required
                       >
                         <option value="" disabled>
@@ -224,9 +216,7 @@ function Buypage() {
                     type="text"
                     className="form-control"
                     value={address}
-                    onChange={(e) => {
-                      setaddress(e.target.value);
-                    }}
+                    onChange={(e) => setaddress(e.target.value)}
                     required
                     placeholder="Address"
                   />

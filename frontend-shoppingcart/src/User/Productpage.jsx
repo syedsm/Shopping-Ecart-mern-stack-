@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Categoryleft } from "./Categoryleft";
 import Footerpage from "./Footerpage";
+import "../style.css";
 
 function Usersproduct() {
   const [products, setProducts] = useState([]);
@@ -49,7 +50,7 @@ function Usersproduct() {
 
     updatedCart.totalItems += 1;
 
-    console.log(updatedCart);
+    // console.log(updatedCart);
 
     setcartitem(updatedCart);
   }
@@ -60,9 +61,9 @@ function Usersproduct() {
 
   return (
     <>
-      <div className="container-fluid">
+      <div id="carouselContainer" className="container-fluid">
         <div className="row">
-          <div className="col-12">
+          <div id="carouselWrapper" className="col-md-12 col-sm-12">
             <div
               id="carouselExampleIndicators"
               className="carousel slide"
@@ -93,21 +94,21 @@ function Usersproduct() {
               <div className="carousel-inner">
                 <div className="carousel-item active">
                   <img
-                    src="./public/productimages/demophoto.jpeg"
+                    src="../productimages/demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="./public/productimages/2demophoto.jpeg"
+                    src="../productimages/2demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="./public/productimages/3demophoto.jpeg"
+                    src="../productimages/3demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
@@ -151,9 +152,10 @@ function Usersproduct() {
 
         <div className="container mt-3">
           <div className="row">
-            <div className="col-md-3 col-sm-12">
+            <div id="category-left-container" className="col-md-3">
               <Categoryleft onFilter={handleFilter} />
             </div>
+
             <div className="col-md-9 col-sm-12">
               <div className="row">
                 {products.map((item) => (
@@ -172,16 +174,15 @@ function Usersproduct() {
                         alt={item.name}
                       />
                       <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                        <h6
+                        <h3
                           className={`card-title ${
                             isDarkMode ? "text-white" : "text-dark"
                           }`}
                         >
                           {item.name}
-                        </h6>
+                        </h3>
                         <p className="card-text">{item.desc}</p>
                         <h5 className="card-text text-center">
-                          {" "}
                           $ {item.price}
                         </h5>
                         <div className="mt-auto d-grid gap-2">

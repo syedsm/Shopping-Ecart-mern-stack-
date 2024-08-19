@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Contextapi } from "./Contextapi";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 function Cart() {
   const { cartitem, setcartitem, buyitem, setbuyitem, loginname, themeMode } =
@@ -11,11 +12,11 @@ function Cart() {
   let totalAmount = 0;
 
   useEffect(() => {
-    console.log("cart_Items", cartitem);
-    // if (!cartitem.item) {
-    //   return;
-    // }
-    // fetch("/api/cartproducts", {
+    if (!cartitem || !cartitem.item) {
+      console.warn("Cart items are not defined");
+      return;
+    }
+
     fetch(`${import.meta.env.VITE_SERVER_URL}/api/cartproducts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -24,37 +25,19 @@ function Cart() {
       .then((result) => result.json())
       .then((data) => {
         if (data.status === 200) {
-          console.log(data.apiData);
           setProducts(data.apiData);
         } else {
           setMessage(data.message);
         }
+      })
+      .catch((error) => {
+        console.error("Error fetching cart products:", error);
+        setMessage("Failed to load cart products");
       });
   }, [cartitem.item, cartitem, buyitem]);
 
-  // useEffect(() => {
-  //   console.log("Buy_Items", buyitem);
-  //   if (!cartitem.item) {
-  //     return;
-  //   }
-  //   fetch("/api/cartproducts", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ ids: Object.keys(buyitem.item) }),
-  //   })
-  //     .then((result) => result.json())
-  //     .then((data) => {
-  //       if (data.status === 200) {
-  //         console.log(data.apiData);
-  //         setProducts(data.apiData);
-  //       } else {
-  //         setMessage(data.message);
-  //       }
-  //     });
-  // }, [buyitem.item, buyitem]);
-
   function handleQuan(id) {
-    return cartitem.item[id];
+    return cartitem.item ? cartitem.item[id] : 0;
   }
 
   function handleIncrement(e, id, qty) {
@@ -100,27 +83,32 @@ function Cart() {
       return;
     } else {
       localStorage.setItem("cart", "");
-      setcartitem(JSON.stringify(localStorage.getItem("cart")));
+      setcartitem(JSON.parse(localStorage.getItem("cart") || "{}"));
       navigate("/userproduct");
     }
   }
 
   function handleDelete(e, id) {
-    if (!id) {
-      console.error("Product ID is undefined");
-      return;
+    const handleconfrim = window.confirm("Are you sure to delete");
+    if (handleconfrim) {
+      if (!id) {
+        console.error("Product ID is undefined");
+        return;
+      }
+      let currentQty = handleQuan(id);
+      const updatedItems = Object.fromEntries(
+        Object.entries(cartitem.item).filter(([itemId]) => itemId !== id)
+      );
+      const updatedTotalItems = cartitem.totalItems - currentQty;
+      const updatedCart = {
+        ...cartitem,
+        item: updatedItems,
+        totalItems: updatedTotalItems,
+      };
+      setcartitem(updatedCart);
+    } else {
+      console.log("error delete product in cart");
     }
-    let currentQty = handleQuan(id);
-    const updatedItems = Object.fromEntries(
-      Object.entries(cartitem.item).filter(([itemId]) => itemId !== id)
-    );
-    const updatedTotalItems = cartitem.totalItems - currentQty;
-    const updatedCart = {
-      ...cartitem,
-      item: updatedItems,
-      totalItems: updatedTotalItems,
-    };
-    setcartitem(updatedCart);
   }
 
   return (
@@ -128,12 +116,13 @@ function Cart() {
       {message}
       {product.length ? (
         <div
+          id="cart-container"
           className={`container mt-5 ${
             themeMode === "dark" ? "dark-mode" : "light-mode"
           }`}
         >
           <div className="row">
-            <div className="col-lg-8 col-md-12">
+            <div id="cart-items" className="col-lg-8 col-md-12">
               <div
                 className={`card mb-3 ${
                   themeMode === "dark"
@@ -142,7 +131,7 @@ function Cart() {
                 }`}
               >
                 <div className="card-header">
-                  <h5> Items in Cart </h5>
+                  <h5>Items in Cart</h5>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -164,6 +153,7 @@ function Cart() {
                             <td>{result.name}</td>
                             <td>
                               <img
+                                id={`product-img-${result._id}`}
                                 className="img-fluid"
                                 src={`/productimages/${result.img}`}
                                 alt={result.name}
@@ -210,7 +200,7 @@ function Cart() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-12">
+            <div id="order-summary" className="col-lg-4 col-md-12">
               <div
                 className={`card ${
                   themeMode === "dark"
@@ -253,15 +243,17 @@ function Cart() {
           </div>
         </div>
       ) : (
-        <div className="text-center">
-          <img
-            src="empty-cart.png"
-            className="img-fluid"
-            alt="emptycart"
-            style={{ width: "40%" }}
-          />
-          <h3>Your Cart is Empty</h3>
-        </div>
+        <section id="emptycard">
+          <div className="text-center">
+            <img
+              src="./empty-cart.png"
+              className="img-fluid"
+              alt="emptycart"
+              style={{ width: "40%" }}
+            />
+            <h3>Your Cart is Empty</h3>
+          </div>
+        </section>
       )}
     </>
   );

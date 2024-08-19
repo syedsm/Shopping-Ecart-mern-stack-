@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Contextapi } from "./Contextapi.jsx";
 import { Link, useNavigate } from "react-router-dom";
-
+import "./style.css";
 function Header() {
   const {
     loginname,
@@ -24,66 +24,6 @@ function Header() {
 
   return (
     <>
-      <style>
-        {`
-          body {
-            padding-top: 10%; 
-          }
-
-          #header .form-check-input {
-            width: 50px;
-            height: 25px;
-            background-color: #ccc;
-            border-radius: 25px;
-            position: relative;
-            transition: background-color 0.3s ease-in-out;
-            -webkit-appearance: none;
-            outline: none;
-            cursor: pointer;
-          }
-
-          #header .form-check-input:checked {
-            background-color: #0d6efd;
-          }
-
-          #header .form-check-input:before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 21px;
-            height: 21px;
-            background-color: #fff;
-            border-radius: 50%;
-            transition: transform 0.3s ease-in-out;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-          }
-
-          #header .form-check-input:checked:before {
-            transform: translateX(25px);
-            box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.6);
-          }
-
-          #header .form-check-label {
-            margin-left: 10px;
-            font-weight: bold;
-          }
-
-          @media (max-width: 768px) {
-            #header .row {
-              text-align: center;
-            }
-            #header .col-md-2,
-            #header .col-md-8,
-            #header .col-md-10 {
-              margin-bottom: 10px;
-            }
-            body {
-              padding-top: 10%; 
-            }
-          }
-        `}
-      </style>
       <section
         id="header"
         className={`fixed-top ${
@@ -108,7 +48,7 @@ function Header() {
                 <div className="col-md-2 col-6 text-center text-md-start">
                   <h5 style={{ margin: 0 }}>Welcome {loginname}</h5>
                 </div>
-                <div className="col-md-8 col-12 d-flex justify-content-md-end justify-content-center align-items-center mt-2 mt-md-0">
+                <div className="col-md-8 col-12 d-flex justify-content-md-end justify-content-center align-items-center mt-2 mt-md-0 flex-wrap">
                   <div className="form-check form-switch me-3">
                     <input
                       className="form-check-input"
@@ -120,7 +60,9 @@ function Header() {
                     <label className="form-check-label" htmlFor="themeSwitch">
                       <i
                         className={`bi ${
-                          themeMode === "dark" ? "bi-moon-stars-fill" : "bi-sun-fill"
+                          themeMode === "dark"
+                            ? "bi-moon-stars-fill"
+                            : "bi-sun-fill"
                         }`}
                       ></i>
                       {themeMode === "dark" ? " Dark Mode" : " Light Mode"}
@@ -146,7 +88,7 @@ function Header() {
                 </div>
               </>
             ) : (
-              <div className="col-md-10 col-12 d-flex justify-content-md-end justify-content-center align-items-center mt-2 mt-md-0">
+              <div className="col-md-10 col-12 d-flex justify-content-md-end justify-content-center align-items-center mt-2 mt-md-0 flex-wrap">
                 <div className="form-check form-switch me-3">
                   <input
                     className="form-check-input"
@@ -158,7 +100,9 @@ function Header() {
                   <label className="form-check-label" htmlFor="themeSwitch">
                     <i
                       className={`bi ${
-                        themeMode === "dark" ? "bi-moon-stars-fill" : "bi-sun-fill"
+                        themeMode === "dark"
+                          ? "bi-moon-stars-fill"
+                          : "bi-sun-fill"
                       }`}
                     ></i>
                     {themeMode === "dark" ? " Dark Mode" : " Light Mode"}

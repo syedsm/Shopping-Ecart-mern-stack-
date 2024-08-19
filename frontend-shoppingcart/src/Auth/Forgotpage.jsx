@@ -29,12 +29,30 @@ function ForgotPage() {
   };
 
   return (
-    <div className={`container d-flex justify-content-center align-items-center ${themeMode === "dark" ? 'bg-dark text-white ' : 'bg-light text-dark'}`} style={{ height: '70vh' }}>
-      <div className={`card p-4 ${themeMode === "dark" ? 'bg-dark text-white' : 'bg-light text-dark'}`} style={{ width: '30%',border:"2px solid white" }}>
+    <section id="Forgotpage">
+    <div
+      className={`container d-flex justify-content-center align-items-center ${
+        themeMode === "dark" ? "bg-dark text-white" : "bg-light text-dark"
+      }`}
+      style={{ height: "70vh", padding: "15px" }}
+    >
+      <div
+        className={`card p-4 ${
+          themeMode === "dark" ? "bg-dark text-white" : "bg-light text-dark"
+        }`}
+        style={{
+          width: "100%",
+          maxWidth: "400px", /* Ensures a max width */
+          border: "2px solid white",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)", /* Adds shadow for better visibility */
+        }}
+      >
         <h2 className="card-title text-center">Forgot Password</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email Address:</label>
+            <label htmlFor="email" className="form-label">
+              Email Address:
+            </label>
             <input
               type="email"
               id="email"
@@ -42,14 +60,20 @@ function ForgotPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="form-control"
+              style={{ fontSize: "16px", padding: "10px" }}
             />
           </div>
-          <button type="submit" className="btn btn-primary w-100">Send Reset Link</button>
+          <button type="submit" className="btn btn-primary w-100" style={{ padding: "10px" }}>
+            Send Reset Link
+          </button>
         </form>
         {message && <p className="mt-3 text-center text-success">{message}</p>}
         {error && <p className="mt-3 text-center text-danger">{error}</p>}
       </div>
     </div>
+  </section>
+  
+
   );
 }
 

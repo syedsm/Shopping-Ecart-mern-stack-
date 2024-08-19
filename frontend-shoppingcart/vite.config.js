@@ -4,15 +4,16 @@ import path from 'path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
-  
 
+  console.log(env.VITE_API_URL);
   return {
     plugins: [react()],
     server: {
       proxy: {
         '/api': {
           // target:env.VITE_SERVER_URL,
-          target: "https://shopping-ecart-backend.onrender.com",
+          // target: "https://shopping-ecart-backend.onrender.com",
+          target: env.VITE_API_URL,
           changeOrigin: true,
           secure: false,
         },
@@ -23,13 +24,10 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, 'src'),
       },
     },
-    build: {
-    rollupOptions: {
-      input: 'index.html'
-    }
-  },
-  server: {
-    historyApiFallback: true
-  },
+    // build: {
+    //   rollupOptions: {
+    //     input: 'index.html'
+    //   }
+    // },
   };
 });

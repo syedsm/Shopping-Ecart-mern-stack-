@@ -91,7 +91,7 @@ function ProductDetail() {
 
   return (
     <>
-      <div className="container mt-4">
+      <div id="productdetail" className="container mt-4">
         <div className="row">
           <div className="col-lg-5 mb-4">
             <div
