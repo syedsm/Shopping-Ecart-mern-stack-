@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           // target:env.VITE_SERVER_URL,
-          // target: "https://shopping-ecart-backend.onrender.com",
           target: env.VITE_API_URL,
           changeOrigin: true,
           secure: false,
