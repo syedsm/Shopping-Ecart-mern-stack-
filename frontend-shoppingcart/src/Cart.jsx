@@ -243,6 +243,7 @@ function Cart() {
           </div>
         </div>
       ) : (
+<<<<<<< HEAD
         <section id="emptycard">
           <div className="text-center">
             <img
@@ -254,6 +255,17 @@ function Cart() {
             <h3>Your Cart is Empty</h3>
           </div>
         </section>
+=======
+        <div className="text-center">
+          <img
+            src="./empty-cart.png"
+            className="img-fluid"
+            alt="emptycart"
+            style={{ width: "40%" }}
+          />
+          <h3>Your Cart is Empty</h3>
+        </div>
+>>>>>>> 62a04c694d1229c84fda551b50fc1e90a967285d
       )}
     </>
   );
