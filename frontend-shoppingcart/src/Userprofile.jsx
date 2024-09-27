@@ -20,23 +20,22 @@ function UserProfile() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // fetch(`/api/singleuserfetch/${loginname}`, {
-    fetch(
-      `${import.meta.env.VITE_SERVER_URL}/api/singleuserfetch/${loginname}`,
+    // fetch(`/api/user/singleuserfetch/${loginname}`, {
+      fetch(
+      `${import.meta.env.VITE_SERVER_URL}/api/user/singleuserfetch/${loginname}`,
       {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    )
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         // console.log("fetch user data", res);
         if (res.status === 201) {
           const { username, email, profileimage, _id } = res.body;
           setProfile({ username, email, profileimage, _id });
-          setImagePreview(`/productimages/${profileimage}`);
+          setImagePreview(`../assest/${profileimage}`);
         }
       })
       .catch((error) => {
@@ -73,10 +72,10 @@ function UserProfile() {
       }
 
       const id = profile._id;
-      // axios.put(`/api/userprofileupdate/${id}`, formData, {
       axios
         .put(
-          `${import.meta.env.VITE_SERVER_URL}/api/userprofileupdate/${id}`,
+          `${import.meta.env.VITE_SERVER_URL}/api/user/userprofileupdate/${id}`,
+          // `/api/user/userprofileupdate/${id}`,
           formData,
           {
             headers: {
@@ -111,12 +110,15 @@ function UserProfile() {
       const id = profile._id;
       // axios.delete(`/api/userdelete/${id}`, {
       axios
-        .delete(`${import.meta.env.VITE_SERVER_URL}/api/userdelete/${id}`, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
+        .delete(
+          `${import.meta.env.VITE_SERVER_URL}/api/user/userdelete/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
           // console.log("Deleted Data", res);
           alert("User successfully deleted");
           setloginname("");
@@ -149,7 +151,7 @@ function UserProfile() {
               <div className="card-header text-center">
                 <h2>User Profile</h2>
                 <img
-                  src={imagePreview || `/productimages/${profile.profileimage}`}
+                  src={imagePreview || `../assest/${profile.profileimage}`}
                   alt="Profile"
                   className="rounded-circle img-fluid mb-3"
                   style={{
@@ -195,13 +197,13 @@ function UserProfile() {
                 </div>
                 <div className="d-flex flex-column flex-md-row justify-content-between">
                   <button
-                    className="btn btn-primary mt-3 w-100 w-md-48"
+                    className="btn btn-primary mt-3"
                     onClick={handleUpdate}
                   >
                     Update Profile
                   </button>
                   <button
-                    className="btn btn-danger mt-3 w-100 w-md-48"
+                    className="btn btn-danger mt-3 "
                     onClick={handleDelete}
                   >
                     Deactivate Account

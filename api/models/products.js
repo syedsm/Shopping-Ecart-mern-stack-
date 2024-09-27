@@ -5,10 +5,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    img: {
+    mainImg: {
         type: String,
         required: true,
     },
+    additionalImgs: [{
+        type: String,
+        required: true,
+    }],
     desc: {
         type: String,
         required: true,

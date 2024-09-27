@@ -24,7 +24,26 @@ The frontend is built using React and Vite. It is located in the `frontend-shopp
 
    ```bash
    cd frontend-shoppingcart
+   ```
 
-npm install
+#### Next Step
+
+The frontend is built using React and Vite. It is located in the `frontend-shoppingcart` directory.
+
+#### Setup the Project
+
+2. **After Navigate Frontend Directory:**
+   Run this command
+   ```bash
+   npm i
+   ```
+3. **After Setup the Project Run this Project:**
+
+#### Run this Project
+
+```bash
+  npm run dev
+
+```
 
 

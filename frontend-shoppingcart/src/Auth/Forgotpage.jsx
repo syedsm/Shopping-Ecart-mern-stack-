@@ -12,7 +12,8 @@ function ForgotPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/forgotpassword`, { email });
+      // const res = await axios.post('/api/auth/forgotpassword', { email });
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/forgotpassword`, { email });
       // const res = await axios.post('/api/forgotpassword', { email });
       setMessage(res.data.message);
       setError(''); 

@@ -32,7 +32,8 @@ function Buypage() {
         if (buyitem && buyitem.item) {
           // const res = await axios.post("/api/buycheck/", {
           const res = await axios.post(
-            `${import.meta.env.VITE_SERVER_URL}/api/buycheck/`,
+            `${import.meta.env.VITE_SERVER_URL},
+            /api/user/buycheck/`,
             {
               ids: Object.keys(buyitem.item),
             }
@@ -74,6 +75,7 @@ function Buypage() {
     setBillingDetails(data);
     setShowBillingDetails(true);
   };
+
   const handlecheckout = () => {
     if (loginname) {
       navigate("/cart");
@@ -85,7 +87,6 @@ function Buypage() {
   return (
     <div id="buypage" className="container mt-5">
       <div className="row">
-        {/* Left side: Product details */}
         <div className="col-12 col-md-6 mb-4">
           <div className="card shadow-sm">
             <div className="card-body">
@@ -94,7 +95,7 @@ function Buypage() {
               </h1>
               <div className="img mb-3 text-center">
                 <img
-                  src={`./public/productimages/${data.img}`}
+                  src={`./public/productimages/${data.mainImg}`}
                   alt="Product"
                   className="img-fluid"
                 />
@@ -107,7 +108,6 @@ function Buypage() {
           </div>
         </div>
 
-        {/* Right side: Billing address form */}
         <div
           className={`col-12 col-md-6 ${
             showBillingDetails ? "d-none" : "d-block"
@@ -117,7 +117,6 @@ function Buypage() {
             <div className="card-body">
               <h2 className="card-title text-center">Billing Address</h2>
               <form onSubmit={handleSubmit}>
-                {/* Form fields */}
                 <div className="row">
                   <div className="col-12 col-md-6 mb-3">
                     <div className="form-group">
@@ -229,7 +228,6 @@ function Buypage() {
           </div>
         </div>
 
-        {/* Final Billing Section */}
         <div
           className={`col-12 col-md-6 ${
             showBillingDetails ? "d-block" : "d-none"

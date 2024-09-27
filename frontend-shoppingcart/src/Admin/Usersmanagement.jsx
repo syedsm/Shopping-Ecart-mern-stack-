@@ -7,13 +7,13 @@ import { Contextapi } from "@/Contextapi";
 function Usersmanag() {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
-  const { themeMode,loginname } = useContext(Contextapi);
+  const { themeMode, loginname } = useContext(Contextapi); 
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // fetch(`/api/usersfetch/${id}`, {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/api/usersfetch/${id}`, {
+    // fetch(`/api/admin/usersfetch/${id}`, {
+      fetch(`${import.meta.env.VITE_SERVER_URL}/api/admin/usersfetch/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -32,11 +32,9 @@ function Usersmanag() {
     const updatedUsers = users.map((user) => {
       if (user._id === userId) {
         const newStatus = user.status === "Active" ? "Suspend" : "Active";
-        // Send PUT request to update status in backend
         axios
-          .put(
-            // `/api/statusupdate/${userId}`,
-            `${import.meta.env.VITE_SERVER_URL}/api/statusupdate/${userId}`,
+        // .put(`/api/admin/statusupdate/${userId}`,
+          .put(`${import.meta.env.VITE_SERVER_URL}/api/admin/statusupdate/${userId}`,
             { status: newStatus },
             {
               headers: {
@@ -45,8 +43,7 @@ function Usersmanag() {
             }
           )
           .then((response) => {
-            // console.log(response);
-            console.log("Status updated successfully:", response.data);
+            // console.log("Status updated successfully:", response.data);
           })
           .catch((error) => {
             console.error("Error updating status:", error);
@@ -62,17 +59,21 @@ function Usersmanag() {
   return (
     <>
       {loginname === "admin" ? (
-        <div className="container ">
-          <div className="row ">
+        <div
+          className={`container ${
+            themeMode === "dark" ? "bg-dark text-white" : "bg-light text-dark"
+          }`}
+        >
+          <div className="row">
             <Left />
             <div className="col-md-9">
-              <h2 className="text-center">Users Management</h2>
+              <h2 className="text-center mb-4">Users Management</h2>
               <p>{message}</p>
               <table
                 className={`table table-hover ${
                   themeMode === "dark"
-                    ? "bg-dark text-white"
-                    : "bg-light text-dark"
+                    ? "table-dark text-white"
+                    : "table-light text-dark"
                 }`}
               >
                 <thead>
@@ -100,7 +101,7 @@ function Usersmanag() {
                             className="form-check-label"
                             htmlFor={`toggleSwitch-${user._id}`}
                           >
-                            {user.status === "Active" ? "Active " : "Suspend"}
+                            {user.status === "Active" ? "Active" : "Suspend"}
                           </label>
                         </div>
                       </td>
@@ -117,4 +118,5 @@ function Usersmanag() {
     </>
   );
 }
+
 export default Usersmanag;

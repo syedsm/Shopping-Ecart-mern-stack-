@@ -5,18 +5,18 @@ import path from 'path';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
-  console.log(env.VITE_API_URL);
+  // console.log(env.VITE_API_URL);
   return {
     plugins: [react()],
     server: {
-      proxy: {
-        '/api': {
-          // target:env.VITE_SERVER_URL,
-          target: env.VITE_API_URL,
-          changeOrigin: true,
-          secure: false,
-        },
-      },
+      // proxy: {
+      //   '/api': {
+      //     target:env.VITE_SERVER_URL,
+      //     // target: env.VITE_API_URL,
+      //     changeOrigin: true,
+      //     secure: false,
+      //   },
+      // },
     },
     resolve: {
       alias: {

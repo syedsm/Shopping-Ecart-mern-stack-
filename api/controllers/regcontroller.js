@@ -46,7 +46,7 @@ exports.reg = async (req, res) => {
 exports.logincheck = async (req, res) => {
     // console.log(req.body)
     try {
-        const { Username,Password } = req.body
+        const { Username, Password } = req.body
         const record = await reg.findOne({ $or: [{ email: Username }, { username: Username }] })
         // console.log(record)
         if (record !== null) {
@@ -139,7 +139,6 @@ exports.update = async (req, res) => {
     // console.log("user status:", newStatus, " ", "User ID:", userId);
 
     try {
-        // Find the user by ID and update the status
         const updatedUser = await reg.findByIdAndUpdate(
             userId,
             { $set: { status: newStatus } }
@@ -178,13 +177,13 @@ exports.forgotpassword = async (req, res) => {
             },
         });
 
-        console.log("Connected to SMTP server");
+        // console.log("Connected to SMTP server");
 
         let info = await transporter.sendMail({
-            from: 'smsyed123786@gmail.com', // sender address
-            to: email, // list of receivers
-            subject: 'Password Reset Link - Shopping E-cart ID', // Subject line
-            text: 'Click to reset the password', // plain text body
+            from: process.env.NODEMAILER_USER,
+            to: email,
+            subject: 'Password Reset Link - Shopping E-cart ID',
+            text: 'Click to reset the password',
             html: `
                 <div style="font-family: Arial, sans-serif; line-height: 1.6;">
                     <h2 style="color: #333;">Password Reset Request</h2>
@@ -199,10 +198,10 @@ exports.forgotpassword = async (req, res) => {
                     <p style="font-size: 12px; color: #777;">If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:</p>
                     <p style="font-size: 12px; color: #777;"><a href="http://localhost:5173/resetpassword/${email}">http://localhost:5173/resetpassword/${email}</a></p>
                 </div>
-            `, // html body
+            `,
         });
 
-        console.log('Password reset link has been sent to your email');
+        // console.log('Password reset link has been sent to your email');
         res.send({ message: 'Password reset link has been sent to your email' });
     } catch (error) {
         console.error(error);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Categoryleft } from "./Categoryleft";
 import Footerpage from "./Footerpage";
-import "../style.css";
+// import "../style.css";
 
 function Usersproduct() {
   const [products, setProducts] = useState([]);
@@ -13,13 +13,13 @@ function Usersproduct() {
 
   useEffect(() => {
     axios
-      // .get("/api/instockproducts")
-      .get(`${import.meta.env.VITE_SERVER_URL}/api/instockproducts`)
-      .then((response) => {
-        if (response.status === 200) {
-          setProducts(response.data.apiData || []);
+      // .get("/api/user/instockproducts")
+      .get(`${import.meta.env.VITE_SERVER_URL}/api/user/instockproducts`)
+      .then((res) => {
+        if (res.status === 200) {
+          setProducts(res.data.apiData || []);
         } else {
-          setMessage(response.data.message || "Failed to fetch products");
+          setMessage(res.data.message || "Failed to fetch products");
         }
       })
       .catch((error) => {
@@ -37,21 +37,15 @@ function Usersproduct() {
     if (!updatedCart.item) {
       updatedCart.item = {};
     }
-
     if (typeof updatedCart.totalItems === "undefined") {
       updatedCart.totalItems = 0;
     }
-
     if (updatedCart.item[_id]) {
       updatedCart.item[_id] += 1;
     } else {
       updatedCart.item[_id] = 1;
     }
-
     updatedCart.totalItems += 1;
-
-    // console.log(updatedCart);
-
     setcartitem(updatedCart);
   }
 
@@ -94,21 +88,21 @@ function Usersproduct() {
               <div className="carousel-inner">
                 <div className="carousel-item active">
                   <img
-                    src="../productimages/demophoto.jpeg"
+                    src="../assest/demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="../productimages/2demophoto.jpeg"
+                    src="../assest/2demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="../productimages/3demophoto.jpeg"
+                    src="../assest/3demophoto.jpeg"
                     className="d-block w-100 img-fluid"
                     alt="..."
                   />
@@ -169,21 +163,21 @@ function Usersproduct() {
                       }`}
                     >
                       <img
-                        src={`../productimages/${item.img}`}
+                        src={`../productimages/${item.mainImg}`}
                         className="card-img-top img-fluid"
                         alt={item.name}
                       />
                       <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                        <h3
+                        <h6
                           className={`card-title ${
                             isDarkMode ? "text-white" : "text-dark"
                           }`}
                         >
                           {item.name}
-                        </h3>
-                        <p className="card-text">{item.desc}</p>
-                        <h5 className="card-text text-center">
-                          $ {item.price}
+                        </h6>
+                        {/* <p className="card-text">{item.desc}</p> */}
+                        <h5 className="card-text text-center mt-5">
+                          Price $ {item.price}
                         </h5>
                         <div className="mt-auto d-grid gap-2">
                           <button

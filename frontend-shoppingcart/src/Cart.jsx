@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Contextapi } from "./Contextapi";
 import { useNavigate } from "react-router-dom";
-import "./style.css";
+import axios from "axios";
+// import "./style.css";
 
 function Cart() {
   const { cartitem, setcartitem, buyitem, setbuyitem, loginname, themeMode } =
@@ -16,18 +17,14 @@ function Cart() {
       console.warn("Cart items are not defined");
       return;
     }
-
-    fetch(`${import.meta.env.VITE_SERVER_URL}/api/cartproducts`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ids: Object.keys(cartitem.item) }),
-    })
-      .then((result) => result.json())
-      .then((data) => {
-        if (data.status === 200) {
-          setProducts(data.apiData);
+    axios
+      // .post("/api/user/cartproducts", { ids: Object.keys(cartitem.item)} )
+      .post(`${import.meta.env.VITE_SERVER_URL}/api/user/cartproducts`, { ids: Object.keys(cartitem.item)} )
+      .then((res) => {
+        if (res.status === 200) {
+          setProducts(res.data.apiData); 
         } else {
-          setMessage(data.message);
+          setMessage(res.data.message); 
         }
       })
       .catch((error) => {
@@ -155,7 +152,7 @@ function Cart() {
                               <img
                                 id={`product-img-${result._id}`}
                                 className="img-fluid"
-                                src={`/productimages/${result.img}`}
+                                src={`/productimages/${result.mainImg}`}
                                 alt={result.name}
                                 style={{ maxWidth: "50px" }}
                               />
@@ -246,7 +243,7 @@ function Cart() {
         <section id="emptycard">
           <div className="text-center">
             <img
-              src="./empty-cart.png"
+              src="../assest/empty-cart.png"
               className="img-fluid"
               alt="emptycart"
               style={{ width: "40%" }}
@@ -254,7 +251,6 @@ function Cart() {
             <h3>Your Cart is Empty</h3>
           </div>
         </section>
-     
       )}
     </>
   );

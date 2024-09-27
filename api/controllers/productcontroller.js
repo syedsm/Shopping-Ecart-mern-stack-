@@ -3,36 +3,27 @@ const checkout = require('../models/checkout')
 
 exports.productadd = async (req, res) => {
     // console.log("All data", req.body);
-    // console.log("Requested File", req.file);
-
-    const { name, desc, price, qty, category } = req.body;
-
+    // console.log("Requested Files", req.files);
     try {
-        let record;
-        if (req.file) {
-            const filename = req.file.filename;
-            record = new product({ name, desc, price, qty, img: filename, category });
-        } else {
-            record = new product({ name, desc, price, qty, category });
-        }
+        const mainImg = req.files['mainImg'][0].filename;
+        const additionalImgs = req.files['additionalImgs'].map(file => file.filename);
 
-        // Save the product to the database
-        await record.save();
-
-        // console.log("Data Saved", record);
-
-        res.status(201).json({
-            status: 201,
-            apiData: record,
-            message: 'Product has been successfully added'
+        const newProduct = new product({
+            name: req.body.name,
+            desc: req.body.desc,
+            price: req.body.price,
+            qty: req.body.qty,
+            category: req.body.category,
+            mainImg: mainImg,
+            additionalImgs: additionalImgs,
         });
+
+        const savedProduct = await newProduct.save();
+        // console.log("saved", savedProduct);
+        res.status(201).json({ message: "Product added successfully", product: savedProduct });
     } catch (error) {
-        console.error("Error saving product:", error.message);
-
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        });
+        console.error('Error adding product:', error);
+        res.status(500).json({ message: 'Failed to add product' });
     }
 };
 
@@ -70,33 +61,32 @@ exports.singleupdate = async (req, res) => {
 }
 
 exports.productupdate = async (req, res) => {
-    // console.log(req.file)
-    // console.log(req.params.id)
-    // console.log(req.body)
-    const id = req.params.id
-    const { name, desc, price, qty, status } = req.body
+    const id = req.params.id;
+
+    // console.log("Body", req.body);
+    // console.log("Files images", req.files);
+
+    const { name, desc, price, qty, status, existingMainImg, existingAdditionalImgs } = req.body;
     try {
+        const mainImg = req.files['img']
+            ? req.files['img'][0].filename
+            : existingMainImg;
 
-        if (req.file) {
-            const filename = req.file.filename
-            await product.findByIdAndUpdate(id, { name: name, desc: desc, qty: qty, img: filename, status: status, price: price })
+        const additionalImgs = req.files['additionalImgs']
+            ? req.files['additionalImgs'].map(file => file.filename)
+            : existingAdditionalImgs;
 
-        } else {
-            await product.findByIdAndUpdate(id, { name: name, desc: desc, qty: qty, status: status, price: price })
+        const Updatedrecord = await product.findByIdAndUpdate(id, {
+            name, desc, price, qty, status, mainImg, additionalImgs
+        }, { new: true });
 
-        }
-        res.json({
-            status: 200,
-            message: "Successfully Product has been Updated"
-        })
+        res.status(200).json({ message: "Product updated successfully", Updatedrecord });
     } catch (error) {
-        res.json({
-            status: 400,
-            message: error.message
-        })
+        console.error(error.message);
+        res.status(400).json({ message: "Server Error " })
     }
 
-}
+};
 
 exports.delete = async (req, res) => {
     // console.log(req.params.id)
@@ -174,7 +164,6 @@ exports.categoryfilter = async (req, res) => {
     // console.log("categoryfilter", req.params.category);
     const category = req.params.category
     try {
-        // Filter products by category and status
         const filteredProducts = await product.find({
             category: category,
             status: "IN-STOCK"
@@ -212,7 +201,6 @@ exports.buycheck = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
-
 
 // exports.cartvalue = async (req, res) => {
 //     const username = req.params.loginname

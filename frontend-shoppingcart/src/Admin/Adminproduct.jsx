@@ -12,22 +12,22 @@ function Adminproduct() {
 
   useEffect(() => {
     axios
-      // .get("/api/allproduct", {
-      .get(`${import.meta.env.VITE_SERVER_URL}/api/allproduct`, {
+      // .get("/api/admin/allproduct", {
+        .get(`${import.meta.env.VITE_SERVER_URL}/api/admin/allproduct`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        //console.log("data",res);
+        console.log("data", res);
         setProducts(res.data.apiData);
       });
   }, [token]);
 
   const handleDeleteProduct = (id) => {
     axios
-      // .delete(`/api/delete/${id}`, {
-      .delete(`${import.meta.env.VITE_SERVER_URL}/api/delete/${id}`, {
+      // .delete(`/api/admin/delete/${id}`, {
+      .delete(`${import.meta.env.VITE_SERVER_URL}/api/admin/delete/${id}`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -59,20 +59,31 @@ function Adminproduct() {
         <section
           id="mid"
           className={`${themeMode === "dark" ? "dark-mode" : "light-mode"}`}
+          style={{
+            minHeight: "100vh",
+            padding: "20px 0",
+            backgroundColor: themeMode === "dark" ? "#181818" : "#f8f9fa",
+          }}
         >
           <div className="container">
             <div className="row">
               <Left />
               <div className="col-md-9">
-                <h2 className="text-center">Product Management</h2>
+                <h2 className="text-center mb-4">Product Management</h2>
                 <p>{message}</p>
                 <Link to="/adminproductadd">
-                  <button className="btn btn-primary form-control">
+                  <button className="btn btn-primary form-control mb-3">
                     Add Product here
                   </button>
                 </Link>
                 {products.length ? (
-                  <table className="table table-hover mt-3">
+                  <table
+                    className={`table table-hover ${
+                      themeMode === "dark"
+                        ? "table-dark text-white"
+                        : "table-light text-dark"
+                    } mt-3`}
+                  >
                     <thead>
                       <tr>
                         <th>S.No</th>
@@ -82,8 +93,8 @@ function Adminproduct() {
                         <th>Product Quantity</th>
                         <th>Product Status</th>
                         <th>Product Image</th>
-                        <th>Action</th>
-                        <th>Action</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -98,22 +109,18 @@ function Adminproduct() {
                           <td>
                             <img
                               style={{ width: "65px" }}
-                              src={`/productimages/${result.img}`}
-                              alt="error"
+                              src={`/productimages/${result.mainImg}`}
+                              alt="Product"
                             />
                           </td>
                           <td>
-                            <button className="btn btn-warning">
-                              <Link
-                                style={{
-                                  textDecoration: "none",
-                                  color: "white",
-                                }}
-                                to={`/productupdate/${result._id}`}
-                              >
-                                Update
-                              </Link>
-                            </button>
+                            <Link
+                              to={`/productupdate/${result._id}`}
+                              className="btn btn-warning text-white"
+                              style={{ textDecoration: "none" }}
+                            >
+                              Update
+                            </Link>
                           </td>
                           <td>
                             <button
@@ -128,11 +135,9 @@ function Adminproduct() {
                     </tbody>
                   </table>
                 ) : (
-                  <>
-                    <div className="text-center mt-3 ">
-                      <h2>No Product Add</h2>
-                    </div>
-                  </>
+                  <div className="text-center mt-3">
+                    <h2>No Products Added</h2>
+                  </div>
                 )}
               </div>
             </div>
