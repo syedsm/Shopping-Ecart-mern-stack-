@@ -24,7 +24,7 @@ function Login() {
     } else {
       try {
         const data = { Username, Password };
-        axios.post(`${import.meta.env.VITE_SERVER_URL}/api/logincheck`, data)
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/logincheck`, data)
         // axios
         //   .post("/api/auth/logincheck", data)
           .then((res) => {
