@@ -22,8 +22,10 @@ function ResetPasswordPage() {
     }
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/resetpassword`, { email, password });
-      // const res = await axios.post('/api/resetpassword', { email, password });
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/resetpassword`,
+        { email, password }
+      );
       setMessage(res.data.message);
       setError("");
     } catch (error) {
@@ -42,14 +44,14 @@ function ResetPasswordPage() {
 
   return (
     <div
-      className="container  d-flex justify-content-center align-items-center"
+      className="container d-flex justify-content-center align-items-center"
       style={{ height: "70vh" }}
     >
       <div
-        className={`card p-4 ${
+        className={`card p-4 w-100 ${
           themeMode === "dark" ? "bg-dark text-white" : "bg-light text-dark"
         }`}
-        style={{ width: "30%", border: "2px solid white" }}
+        style={{ maxWidth: "500px", border: "2px solid white" }}
       >
         <h2
           className={`card-title text-center ${
@@ -84,7 +86,7 @@ function ResetPasswordPage() {
           <button type="submit" className="btn btn-primary w-100">
             Reset Password
           </button>
-          <h5 className="mt-3">
+          <h5 className="mt-3 text-center">
             <Link to="/" style={{ textDecoration: "none", color: "gray" }}>
               Back to Login
             </Link>
