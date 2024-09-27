@@ -190,13 +190,13 @@ exports.forgotpassword = async (req, res) => {
                     <p>Hello,</p>
                     <p>We received a request to reset your password for your Shopping E-cart account. Click the link below to reset your password:</p>
                     <p style="text-align: center;">
-                        <a href="http://localhost:5173/resetsentpage/${email}" style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                        <a href="https://shoppingecart.vercel.app/resetsentpage/${email}" style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Reset Password</a>
                     </p>
                     <p>If you did not request a password reset, please ignore this email or reply to let us know. This password reset link is only valid for the next 24 hours.</p>
                     <p>Thank you,<br/>The Shopping E-cart Team</p>
                     <hr/>
                     <p style="font-size: 12px; color: #777;">If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:</p>
-                    <p style="font-size: 12px; color: #777;"><a href="http://localhost:5173/resetpassword/${email}">http://localhost:5173/resetpassword/${email}</a></p>
+                    <p style="font-size: 12px; color: #777;"><a href="https://shoppingecart.vercel.app/resetpassword/${email}">https://shoppingecart.vercel.app/resetpassword/${email}</a></p>
                 </div>
             `,
         });
